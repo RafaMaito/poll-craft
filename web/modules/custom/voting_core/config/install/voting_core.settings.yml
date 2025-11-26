@@ -1,0 +1,21 @@
+# Default configuration for Voting Core
+
+# voting core flags.
+voting_enabled: TRUE
+show_results_by_default: TRUE
+allow_anonymous_voting: FALSE
+max_votes_per_question: 1
+
+# Legacy/duplicated flags kept for backward compatibility.
+global_voting_enabled: TRUE
+default_show_results: TRUE
+
+# Basic API rate limiting.
+api_rate_limit_per_ip: 100
+api_rate_limit_window: 300
+
+# External sync configuration.
+external_sync_enabled: FALSE
+external_api_url: ""
+external_api_key: ""
+external_sync_queue_name: "voting_external_sync"

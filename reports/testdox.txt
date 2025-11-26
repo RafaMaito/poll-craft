@@ -1,0 +1,48 @@
+Vote Manager (Drupal\Tests\voting_core\Unit\Service\VoteManager)
+ [ ] Cast vote throws exception when voting disabled
+ [ ] Cast vote throws exception for anonymous user
+ [ ] Cast vote throws exception for inactive question
+ [ ] Cast vote throws exception for invalid option
+ [ ] Cast vote throws exception for duplicate vote
+ [ ] Cast vote successfully
+ [ ] Cast vote handles storage exception
+
+Vote Manager Integration (Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegration)
+ [ ] Cast vote integration
+ [ ] Duplicate vote prevented by database constraint
+ [ ] Vote rejected for inactive question
+ [ ] Vote rejected when globally disabled
+ [ ] Vote rejected for non existent question
+ [ ] Vote rejected for invalid option
+ [ ] Multiple users can vote on same question
+ [ ] Vote counting with multiple votes
+ [ ] Transaction rollback on error
+ [ ] High concurrency voting
+ [ ] Vote attempts are logged
+
+Voting Api (Drupal\Tests\voting_api\Functional\VotingApi)
+ [ ] Get active questions
+ [ ] Get single question
+ [ ] Get non existent question returns 404
+ [ ] Cast vote successfully
+ [ ] Anonymous user cannot vote
+ [ ] Duplicate vote is blocked
+ [ ] Get results when allowed
+ [ ] Results hidden when disabled
+ [ ] Voting blocked when globally disabled
+ [ ] Invalid json returns error
+ [ ] Missing fields in vote request
+
+Voting Entities (Drupal\Tests\voting_core\Kernel\VotingEntities)
+ [ ] Question entity creation
+ [ ] Question identifier uniqueness
+ [ ] Option entity with question relationship
+ [ ] Vote entity with user tracking
+ [ ] Duplicate vote prevention via database
+ [ ] Load question by identifier
+ [ ] Vote counting aggregation
+ [ ] Inactive questions are filtered
+ [ ] Cascade delete of options
+ [ ] Options ordered by weight
+ [ ] Timestamps are automatically set
+

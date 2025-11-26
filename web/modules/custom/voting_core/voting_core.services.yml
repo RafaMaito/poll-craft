@@ -1,0 +1,39 @@
+services:
+  voting_core.question_manager:
+    class: 'Drupal\voting_core\Service\QuestionManager'
+    arguments:
+      - "@entity_type.manager"
+      - "@logger.channel.voting_core"
+      - "@cache.default"
+
+  voting_core.vote_manager:
+    class: 'Drupal\voting_core\Service\VoteManager'
+    arguments:
+      - "@entity_type.manager"
+      - "@current_user"
+      - "@logger.channel.voting_core"
+      - "@config.factory"
+      - "@database"
+      - "@event_dispatcher"
+      - "@cache.default"
+
+  voting_core.external_sync_subscriber:
+    class: Drupal\voting_core\EventSubscriber\ExternalSyncSubscriber
+    arguments:
+      - "@config.factory"
+      - "@queue"
+      - "@logger.channel.voting_core"
+    tags:
+      - { name: event_subscriber }
+
+  voting_core.vote_cache_invalidation_subscriber:
+    class: Drupal\voting_core\EventSubscriber\VoteCacheInvalidationSubscriber
+    arguments:
+      - "@cache.default"
+      - "@logger.channel.voting_core"
+    tags:
+      - { name: event_subscriber }
+
+  logger.channel.voting_core:
+    parent: logger.channel_base
+    arguments: ["voting_core"]

@@ -1,0 +1,7 @@
+name: "Voting API"
+type: module
+description: 'REST API endpoints for Voting Core.'
+core_version_requirement: "^11"
+package: "Voting System"
+dependencies:
+  - voting_core:voting_core

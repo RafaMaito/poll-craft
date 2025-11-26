@@ -1,0 +1,242 @@
+{
+  "info": {
+    "name": "Voting API",
+    "description": "REST API endpoints for voting core system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Questions",
+      "item": [
+        {
+          "name": "List All Questions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/voting/questions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "questions"
+              ]
+            },
+            "description": "Retrieves all active Questions.\n\n**Expected Response:**\n- 200 OK: List of questions (even if empty)\n- 500 Internal Server Error: System error"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Question by Identifier",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/voting/questions/{{question_identifier}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "questions",
+                "{{question_identifier}}"
+              ]
+            },
+            "description": "Retrieves a specific question with all its options.\n\n**Expected Response:**\n- 200 OK: Question details with options\n- 404 Not Found: Question doesn't exist or is inactive"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "voting",
+      "item": [
+        {
+          "name": "Cast Vote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question_identifier\": \"favorite-color\",\n  \"option_identifier\": \"red\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/voting/vote",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "vote"
+              ]
+            },
+            "description": "Casts a vote for a specific question and option.\n\n**Required Headers:**\n- Content-Type: application/json\n- Cookie: (user session) OR Authorization: Bearer <token>\n\n**Expected Response:**\n- 200 OK: Vote registered successfully\n- 400 Bad Request: Invalid JSON or missing fields\n- 403 Forbidden: voting disabled or anonymous user\n- 404 Not Found: Question or option doesn't exist\n- 409 Conflict: User already voted\n- 500 Internal Server Error: System error"
+          },
+          "response": []
+        },
+        {
+          "name": "Cast Vote - Invalid JSON",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invalid_json\": TRUE\n"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/voting/vote",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "vote"
+              ]
+            },
+            "description": "Tests error handling for malformed JSON.\n\n**Expected Response:**\n- 400 Bad Request: Invalid JSON format"
+          },
+          "response": []
+        },
+        {
+          "name": "Cast Vote - Missing Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question_identifier\": \"favorite-color\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/voting/vote",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "vote"
+              ]
+            },
+            "description": "Tests error handling for missing required fields.\n\n**Expected Response:**\n- 400 Bad Request: Missing required fields"
+          },
+          "response": []
+        },
+        {
+          "name": "Cast Vote - Duplicate Vote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question_identifier\": \"favorite-color\",\n  \"option_identifier\": \"red\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/voting/vote",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "vote"
+              ]
+            },
+            "description": "Tests duplicate vote prevention.\n\n**Note:** Run this AFTER a successful vote.\n\n**Expected Response:**\n- 409 Conflict: You have already voted for this question"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Results",
+      "item": [
+        {
+          "name": "Get Question Results",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/voting/questions/{{question_identifier}}/results",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "questions",
+                "{{question_identifier}}",
+                "results"
+              ]
+            },
+            "description": "Retrieves voting results for a specific question.\n\n**Note:** Only works if question.show_results is TRUE.\n\n**Expected Response:**\n- 200 OK: Results with vote counts and percentages\n- 403 Forbidden: Results are disabled for this question\n- 404 Not Found: Question doesn't exist or is inactive"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Results - show_results Disabled",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/voting/questions/{{question_no_results}}/results",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "voting",
+                "questions",
+                "{{question_no_results}}",
+                "results"
+              ]
+            },
+            "description": "Tests results endpoint when show_results is FALSE.\n\n**Expected Response:**\n- 403 Forbidden: Results are not available for this question"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost",
+      "type": "string"
+    },
+    {
+      "key": "question_identifier",
+      "value": "favorite-color",
+      "type": "string"
+    },
+    {
+      "key": "question_no_results",
+      "value": "private-question",
+      "type": "string"
+    }
+  ]
+}

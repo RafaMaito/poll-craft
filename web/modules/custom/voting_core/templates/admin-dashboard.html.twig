@@ -1,0 +1,118 @@
+{#
+/**
+ * @file
+ * Template for the Voting Admin Dashboard.
+ *
+ * Variables available:
+ * - user_name
+ * - statistics
+ * - recent_questions
+ * - voting_enabled
+ * - quick_actions
+ */
+#}
+
+<div
+	class="voting-admin-dashboard">
+
+	{# HEADER #}
+	<header class="voting-admin-dashboard__header">
+		<h1 class="page-title">
+			{{ 'Welcome back, @name!'|t({'@name': user_name}) }}
+		</h1>
+		<p class="description">
+			{{ 'Manage your questions and monitor voting activity'|t }}
+		</p>
+
+		<p class="voting-admin-dashboard__status">
+			{% if voting_enabled %}
+				<span class="badge badge--success">{{ 'Voting Active'|t }}</span>
+			{% else %}
+				<span class="badge badge--warning">{{ 'Voting Disabled'|t }}</span>
+			{% endif %}
+		</p>
+	</header>
+
+	{# QUICK ACTIONS #}
+	<section class="voting-admin-dashboard__section">
+		<h2>{{ 'Quick Actions'|t }}</h2>
+
+		<ul class="voting-admin-dashboard__actions">
+			{% for action in quick_actions %}
+				<li class="voting-admin-dashboard__action-item">
+					<a href="{{ action.url }}" class="voting-admin-dashboard__action-link {{ action.class }}">
+						<span class="voting-admin-dashboard__action-title">
+							{{ action.title }}
+						</span>
+						{% if action.description %}
+							<span class="voting-admin-dashboard__action-description">
+								{{ action.description }}
+							</span>
+						{% endif %}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</section>
+
+	{# RECENT QUESTIONS #}
+	<section class="voting-admin-dashboard__section">
+		<h2>{{ 'Recent Questions'|t }}</h2>
+
+		{% if recent_questions is empty %}
+			<p>{{ 'No questions yet'|t }}</p>
+			<p>{{ 'Create your first question!'|t }}</p>
+			<a href="/admin/content/questions/add" class="button button--primary">
+				{{ 'Create Question'|t }}
+			</a>
+		{% else %}
+			<table class="voting-admin-dashboard__table">
+				<thead>
+					<tr>
+						<th>{{ 'Status'|t }}</th>
+						<th>{{ 'vote'|t }}</th>
+						<th>{{ 'Options'|t }}</th>
+						<th>{{ 'Votes'|t }}</th>
+						<th>{{ 'Created'|t }}</th>
+						<th>{{ 'Results'|t }}</th>
+						<th>{{ 'Actions'|t }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for question in recent_questions %}
+						<tr>
+							<td>
+								{% if question.status %}
+									{{ 'Active'|t }}
+								{% else %}
+									{{ 'Inactive'|t }}
+								{% endif %}
+							</td>
+							<td>
+								<strong>{{ question.title }}</strong><br>
+								<small>ID:
+									{{ question.identifier }}</small>
+							</td>
+							<td>{{ question.option_count }}</td>
+							<td>{{ question.vote_count }}</td>
+							<td>{{ question.created|date('d/m/Y H:i') }}</td>
+							<td>
+								{% if question.show_results %}
+									{{ 'Show results'|t }}
+								{% else %}
+									{{ 'Hide results'|t }}
+								{% endif %}
+							</td>
+							<td>
+								<a href="{{ question.edit_url }}">{{ 'Edit'|t }}</a>
+								|
+								<a href="{{ question.view_url }}">{{ 'View'|t }}</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</section>
+
+</div>

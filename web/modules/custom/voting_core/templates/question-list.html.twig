@@ -1,0 +1,93 @@
+{#
+/**
+ * @file
+ * Template for displaying list of questions.
+ *
+ * Available variables:
+ * - questions: Array of question data
+ * - voting_enabled: Boolean indicating if voting is enabled
+ */
+#}
+
+<div class="question-list">
+
+  {% if not voting_enabled %}
+    <div class="voting-system-status voting-disabled">
+      <div class="status-message">
+        <strong>{{ 'Voting System Disabled'|t }}</strong>
+        <p>{{ 'The voting system is currently disabled by the administrator. Questions are visible but voting is not allowed.'|t }}</p>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if questions is empty %}
+    <p class="no-questions">{{ 'No questions available at the moment.'|t }}</p>
+  {% else %}
+    <div class="questions-grid">
+      {% for question in questions %}
+        <article class="question-card {% if not voting_enabled %}disabled{% endif %}">
+          <h2 class="question-title">{{ question.title }}</h2>
+          
+          {% if question.description %}
+            <p class="question-description">{{ question.description }}</p>
+          {% endif %}
+
+          <div class="question-actions">
+            {% if voting_enabled %}
+              <a href="{{ path('voting_core.view_question', {'identifier': question.identifier}) }}" 
+                 class="button button--primary">
+                {{ 'Vote Now'|t }}
+              </a>
+            {% else %}
+              <button class="button button--disabled" disabled>
+                {{ 'Voting Disabled'|t }}
+              </button>
+            {% endif %}
+
+            {% if question.show_results %}
+              <a href="{{ path('voting_core.view_results', {'identifier': question.identifier}) }}" 
+                 class="button button--secondary">
+                {{ 'View Results'|t }}
+              </a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  .voting-system-status {
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .voting-system-status.voting-disabled {
+    background-color: #fff3cd;
+    border: 2px solid #ffc107;
+  }
+
+  .status-icon {
+    font-size: 40px;
+  }
+
+  .status-message strong {
+    color: #856404;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .question-card.disabled {
+    opacity: 0.6;
+  }
+
+  .button--disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+</style>

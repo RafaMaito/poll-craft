@@ -1,0 +1,14 @@
+uuid: b6a0dd47-7c8f-4001-a56e-1884fb03b048
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.voting_analyst
+  module:
+    - user
+id: user_add_role_action.voting_analyst
+label: 'Add the Voting Analyst role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: voting_analyst

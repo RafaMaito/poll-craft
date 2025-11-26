@@ -1,0 +1,14 @@
+uuid: 979acdb2-e584-4a0b-a53f-d75c3f968030
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.voting_analyst
+  module:
+    - user
+id: user_remove_role_action.voting_analyst
+label: 'Remove the Voting Analyst role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: voting_analyst

@@ -1,0 +1,14 @@
+uuid: b621d9b8-a7ab-47dc-b690-cfc59ee76714
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.voting_manager
+  module:
+    - user
+id: user_add_role_action.voting_manager
+label: 'Add the Voting Manager role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: voting_manager

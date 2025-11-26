@@ -1,0 +1,39 @@
+# Voting Core - Menu Links Configuration
+voting_core.settings_link:
+  title: "Voting System"
+  description: "Configure voting system settings"
+  route_name: voting_core.settings
+  parent: system.admin_config_system
+  weight: 10
+
+# Dashboard link in Content menu
+voting_core.admin_dashboard:
+  title: "Voting Dashboard"
+  description: "Overview of voting statistics"
+  route_name: voting_core.admin_dashboard
+  parent: system.admin
+  weight: -10
+
+# Questions management link
+voting_core.questions_admin:
+  title: "Voting Questions"
+  description: "Manage voting questions"
+  route_name: entity.question.collection
+  parent: system.admin_content
+  weight: 10
+
+# Options management link
+voting_core.options_admin:
+  title: "Voting Options"
+  description: "Manage voting options"
+  route_name: entity.option.collection
+  parent: system.admin_content
+  weight: 11
+
+# Votes management link
+voting_core.votes_admin:
+  title: "Voting Votes"
+  description: "View registered votes"
+  route_name: entity.vote.collection
+  parent: system.admin_content
+  weight: 12

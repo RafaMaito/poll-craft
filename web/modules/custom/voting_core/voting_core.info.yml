@@ -1,0 +1,10 @@
+name: "Voting Core"
+type: module
+description: "Core voting module providing Question, Option and Vote entities with admin UI and API integration."
+core_version_requirement: "^11"
+package: "Voting System"
+dependencies:
+  - drupal:user
+  - drupal:system
+  - drupal:field
+  - drupal:image

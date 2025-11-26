@@ -1,0 +1,13 @@
+uuid: 8eff08d9-ac3a-4763-9807-d0c8ebf8de23
+langcode: en
+status: true
+dependencies:
+  module:
+    - voting_core
+id: voting_analyst
+label: 'Voting Analyst'
+weight: 4
+is_admin: false
+permissions:
+  - administer_voting_votes
+  - view_voting_results

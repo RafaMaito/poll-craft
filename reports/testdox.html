@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Test Documentation</title>
+        <style>
+            body {
+                text-rendering: optimizeLegibility;
+                font-family: Source SansSerif Pro, Arial, sans-serif;
+                font-variant-ligatures: common-ligatures;
+                font-kerning: normal;
+                margin-left: 2rem;
+                background-color: #fff;
+                color: #000;
+            }
+
+            body > ul > li {
+                font-size: larger;
+            }
+
+            h2 {
+                font-size: larger;
+                text-decoration-line: underline;
+                text-decoration-thickness: 2px;
+                margin: 0;
+                padding: 0.5rem 0;
+            }
+
+            ul {
+                list-style: none;
+                margin: 0 0 2rem;
+                padding: 0 0 0 1rem;
+                text-indent: -1rem;
+            }
+
+            .success:before {
+                color: #4e9a06;
+                content: '✓';
+                padding-right: 0.5rem;
+            }
+
+            .defect {
+                color: #a40000;
+            }
+
+            .defect:before {
+                color: #a40000;
+                content: '✗';
+                padding-right: 0.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Vote Manager (Drupal\Tests\voting_core\Unit\Service\VoteManager)</h2>
+        <ul>
+            <li class="defect">Cast vote throws exception when voting disabled</li>
+            <li class="defect">Cast vote throws exception for anonymous user</li>
+            <li class="defect">Cast vote throws exception for inactive question</li>
+            <li class="defect">Cast vote throws exception for invalid option</li>
+            <li class="defect">Cast vote throws exception for duplicate vote</li>
+            <li class="defect">Cast vote successfully</li>
+            <li class="defect">Cast vote handles storage exception</li>
+        </ul>
+        <h2>Vote Manager Integration (Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegration)</h2>
+        <ul>
+            <li class="defect">Cast vote integration</li>
+            <li class="defect">Duplicate vote prevented by database constraint</li>
+            <li class="defect">Vote rejected for inactive question</li>
+            <li class="defect">Vote rejected when globally disabled</li>
+            <li class="defect">Vote rejected for non existent question</li>
+            <li class="defect">Vote rejected for invalid option</li>
+            <li class="defect">Multiple users can vote on same question</li>
+            <li class="defect">Vote counting with multiple votes</li>
+            <li class="defect">Transaction rollback on error</li>
+            <li class="defect">High concurrency voting</li>
+            <li class="defect">Vote attempts are logged</li>
+        </ul>
+        <h2>Voting Api (Drupal\Tests\voting_api\Functional\VotingApi)</h2>
+        <ul>
+            <li class="defect">Get active questions</li>
+            <li class="defect">Get single question</li>
+            <li class="defect">Get non existent question returns 404</li>
+            <li class="defect">Cast vote successfully</li>
+            <li class="defect">Anonymous user cannot vote</li>
+            <li class="defect">Duplicate vote is blocked</li>
+            <li class="defect">Get results when allowed</li>
+            <li class="defect">Results hidden when disabled</li>
+            <li class="defect">Voting blocked when globally disabled</li>
+            <li class="defect">Invalid json returns error</li>
+            <li class="defect">Missing fields in vote request</li>
+        </ul>
+        <h2>Voting Entities (Drupal\Tests\voting_core\Kernel\VotingEntities)</h2>
+        <ul>
+            <li class="defect">Question entity creation</li>
+            <li class="defect">Question identifier uniqueness</li>
+            <li class="defect">Option entity with question relationship</li>
+            <li class="defect">Vote entity with user tracking</li>
+            <li class="defect">Duplicate vote prevention via database</li>
+            <li class="defect">Load question by identifier</li>
+            <li class="defect">Vote counting aggregation</li>
+            <li class="defect">Inactive questions are filtered</li>
+            <li class="defect">Cascade delete of options</li>
+            <li class="defect">Options ordered by weight</li>
+            <li class="defect">Timestamps are automatically set</li>
+        </ul>
+    </body>
+</html>

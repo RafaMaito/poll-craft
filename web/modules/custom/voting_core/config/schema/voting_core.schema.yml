@@ -1,0 +1,90 @@
+#  YAML schema for Voting Core module entities.
+voting_vote:
+  type: mapping
+  label: 'Voting Vote'
+  mapping:
+    id:
+      type: integer
+      label: 'ID'
+    uuid:
+      type: string
+      label: 'UUID'
+    question:
+      type: integer
+      label: 'Question'
+    option:
+      type: integer
+      label: 'Option'
+    user_id:
+      type: integer
+      label: 'User ID'
+    created:
+      type: integer
+      label: 'Created'
+# YAML schema for Voting Core module entities.
+voting_question:
+  type: mapping
+  label: 'Voting Question'
+  mapping:
+    id:
+      type: integer
+      label: 'ID'
+    uuid:
+      type: string
+      label: 'UUID'
+    identifier:
+      type: string
+      label: 'Identifier'
+    title:
+      type: string
+      label: 'Title'
+    description:
+      type: string
+      label: 'Description'
+    show_results:
+      type: integer
+      label: 'Show results'
+    status:
+      type: integer
+      label: 'Status'
+    created:
+      type: integer
+      label: 'Created'
+    changed:
+      type: integer
+      label: 'Changed'
+    voting_end_date:
+      type: string
+      label: 'Voting end date'
+# YAML schema for Voting Core module entities.
+voting_option:
+  type: mapping
+  label: 'Voting Option'
+  mapping:
+    id:
+      type: integer
+      label: 'ID'
+    uuid:
+      type: string
+      label: 'UUID'
+    question:
+      type: integer
+      label: 'Question'
+    identifier:
+      type: string
+      label: 'Identifier'
+    title:
+      type: string
+      label: 'Title'
+    description:
+      type: string
+      label: 'Description'
+    weight:
+      type: integer
+      label: 'Weight'
+    created:
+      type: integer
+      label: 'Created'
+    changed:
+      type: integer
+      label: 'Changed'

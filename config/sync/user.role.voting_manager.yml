@@ -1,0 +1,15 @@
+uuid: dc8e44b0-f44b-4b72-9c6f-ead59a83f658
+langcode: en
+status: true
+dependencies:
+  module:
+    - voting_core
+id: voting_manager
+label: 'Voting Manager'
+weight: 3
+is_admin: false
+permissions:
+  - administer_voting_questions
+  - administer_voting_settings
+  - cast_vote
+  - view_voting_results

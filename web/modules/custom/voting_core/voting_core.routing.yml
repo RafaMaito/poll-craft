@@ -1,0 +1,50 @@
+# Voting Core - Routing Configuration
+voting_core.settings:
+  path: "/admin/config/system/voting"
+  defaults:
+    _form: '\Drupal\voting_core\Form\VotingSettingsForm'
+    _title: "Voting Settings"
+  requirements:
+    _permission: "administer_voting_settings"
+  options:
+    _admin_route: TRUE
+
+# Admin Dashboard
+voting_core.admin_dashboard:
+  path: "/admin/voting/dashboard"
+  defaults:
+    _controller: '\Drupal\voting_core\Controller\AdminDashboardController::dashboard'
+    _title: "Voting Dashboard"
+  requirements:
+    _permission: "administer_voting_questions"
+  options:
+    _admin_route: TRUE
+
+# List all questions
+voting_core.question_list:
+  path: "/voting/questions"
+  defaults:
+    _controller: '\Drupal\voting_core\Controller\VotingInterfaceController::listQuestions'
+    _title: "Questions"
+  requirements:
+    _permission: "access content"
+
+# View single question
+voting_core.view_question:
+  path: "/voting/questions/{identifier}"
+  defaults:
+    _controller: '\Drupal\voting_core\Controller\VotingInterfaceController::viewQuestion'
+    _title: "Vote"
+  requirements:
+    _permission: "cast_vote"
+    identifier: "[a-zA-Z0-9_-]+"
+
+# View results
+voting_core.view_results:
+  path: "/voting/questions/{identifier}/results"
+  defaults:
+    _controller: '\Drupal\voting_core\Controller\VotingInterfaceController::viewResults'
+    _title: "Results"
+  requirements:
+    _permission: "view_voting_results"
+    identifier: "[a-zA-Z0-9_-]+"

@@ -1,0 +1,14 @@
+uuid: 54295839-bcd1-4817-ab3b-5eb77a85904f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.voting_manager
+  module:
+    - user
+id: user_remove_role_action.voting_manager
+label: 'Remove the Voting Manager role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: voting_manager

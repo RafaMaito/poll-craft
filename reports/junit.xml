@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/app/phpunit.xml" tests="80" assertions="0" errors="36" failures="44" skipped="0" time="0.000000">
+    <testsuite name="voting-unit" tests="7" assertions="0" errors="7" failures="0" skipped="0" time="0.000000">
+      <testsuite name="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" tests="7" assertions="0" errors="7" failures="0" skipped="0" time="0.000000">
+        <testcase name="testCastVoteThrowsExceptionWhenVotingDisabled" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="105" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionWhenVotingDisabled
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForAnonymousUser" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="134" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForAnonymousUser
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForInactiveQuestion" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="161" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForInactiveQuestion
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForInvalidOption" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="198" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForInvalidOption
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForDuplicateVote" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="236" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForDuplicateVote
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteSuccessfully" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="271" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteSuccessfully
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteHandlesStorageException" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="313" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteHandlesStorageException
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+      </testsuite>
+    </testsuite>
+    <testsuite name="voting-kernel" tests="22" assertions="0" errors="0" failures="22" skipped="0" time="0.000000">
+      <testsuite name="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" tests="11" assertions="0" errors="0" failures="11" skipped="0" time="0.000000">
+        <testcase name="testCastVoteIntegration" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="130" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testCastVoteIntegration
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testDuplicateVotePreventedByDatabaseConstraint" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="161" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testDuplicateVotePreventedByDatabaseConstraint
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedForInactiveQuestion" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="177" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedForInactiveQuestion
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedWhenGloballyDisabled" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="194" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedWhenGloballyDisabled
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedForNonExistentQuestion" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="210" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedForNonExistentQuestion
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedForInvalidOption" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="222" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedForInvalidOption
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testMultipleUsersCanVoteOnSameQuestion" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="250" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testMultipleUsersCanVoteOnSameQuestion
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteCountingWithMultipleVotes" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="283" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteCountingWithMultipleVotes
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testTransactionRollbackOnError" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="329" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testTransactionRollbackOnError
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testHighConcurrencyVoting" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="350" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testHighConcurrencyVoting
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteAttemptsAreLogged" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="387" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteAttemptsAreLogged
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" tests="11" assertions="0" errors="0" failures="11" skipped="0" time="0.000000">
+        <testcase name="testQuestionEntityCreation" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="71" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testQuestionEntityCreation
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testQuestionIdentifierUniqueness" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="100" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testQuestionIdentifierUniqueness
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testOptionEntityWithQuestionRelationship" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="126" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testOptionEntityWithQuestionRelationship
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testVoteEntityWithUserTracking" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="170" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testVoteEntityWithUserTracking
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testDuplicateVotePreventionViaDatabase" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="219" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testDuplicateVotePreventionViaDatabase
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testLoadQuestionByIdentifier" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="264" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testLoadQuestionByIdentifier
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testVoteCountingAggregation" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="293" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testVoteCountingAggregation
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testInactiveQuestionsAreFiltered" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="349" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testInactiveQuestionsAreFiltered
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testCascadeDeleteOfOptions" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="379" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testCascadeDeleteOfOptions
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testOptionsOrderedByWeight" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="418" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testOptionsOrderedByWeight
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testTimestampsAreAutomaticallySet" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="471" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testTimestampsAreAutomaticallySet
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+    <testsuite name="voting-functional" tests="11" assertions="0" errors="11" failures="0" skipped="0" time="0.000000">
+      <testsuite name="Drupal\Tests\voting_api\Functional\VotingApiTest" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" tests="11" assertions="0" errors="11" failures="0" skipped="0" time="0.000000">
+        <testcase name="testGetActiveQuestions" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="81" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetActiveQuestions
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testGetSingleQuestion" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="138" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetSingleQuestion
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testGetNonExistentQuestionReturns404" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="171" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetNonExistentQuestionReturns404
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testCastVoteSuccessfully" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="185" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testCastVoteSuccessfully
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testAnonymousUserCannotVote" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="224" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testAnonymousUserCannotVote
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testDuplicateVoteIsBlocked" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="257" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testDuplicateVoteIsBlocked
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testGetResultsWhenAllowed" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="300" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetResultsWhenAllowed
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testResultsHiddenWhenDisabled" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="359" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testResultsHiddenWhenDisabled
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testVotingBlockedWhenGloballyDisabled" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="382" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testVotingBlockedWhenGloballyDisabled
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testInvalidJsonReturnsError" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="421" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testInvalidJsonReturnsError
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testMissingFieldsInVoteRequest" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="436" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testMissingFieldsInVoteRequest
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+      </testsuite>
+    </testsuite>
+    <testsuite name="voting-all" tests="40" assertions="0" errors="18" failures="22" skipped="0" time="0.000000">
+      <testsuite name="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" tests="11" assertions="0" errors="0" failures="11" skipped="0" time="0.000000">
+        <testcase name="testCastVoteIntegration" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="130" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testCastVoteIntegration
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testDuplicateVotePreventedByDatabaseConstraint" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="161" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testDuplicateVotePreventedByDatabaseConstraint
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedForInactiveQuestion" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="177" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedForInactiveQuestion
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedWhenGloballyDisabled" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="194" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedWhenGloballyDisabled
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedForNonExistentQuestion" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="210" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedForNonExistentQuestion
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteRejectedForInvalidOption" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="222" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteRejectedForInvalidOption
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testMultipleUsersCanVoteOnSameQuestion" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="250" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testMultipleUsersCanVoteOnSameQuestion
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteCountingWithMultipleVotes" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="283" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteCountingWithMultipleVotes
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testTransactionRollbackOnError" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="329" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testTransactionRollbackOnError
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testHighConcurrencyVoting" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="350" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testHighConcurrencyVoting
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+        <testcase name="testVoteAttemptsAreLogged" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php" line="387" class="Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest" classname="Drupal.Tests.voting_core.Kernel.Service.VoteManagerIntegrationTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\Service\VoteManagerIntegrationTest::testVoteAttemptsAreLogged
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VoteManagerIntegrationTest.php:80</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" tests="11" assertions="0" errors="0" failures="11" skipped="0" time="0.000000">
+        <testcase name="testQuestionEntityCreation" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="71" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testQuestionEntityCreation
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testQuestionIdentifierUniqueness" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="100" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testQuestionIdentifierUniqueness
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testOptionEntityWithQuestionRelationship" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="126" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testOptionEntityWithQuestionRelationship
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testVoteEntityWithUserTracking" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="170" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testVoteEntityWithUserTracking
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testDuplicateVotePreventionViaDatabase" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="219" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testDuplicateVotePreventionViaDatabase
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testLoadQuestionByIdentifier" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="264" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testLoadQuestionByIdentifier
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testVoteCountingAggregation" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="293" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testVoteCountingAggregation
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testInactiveQuestionsAreFiltered" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="349" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testInactiveQuestionsAreFiltered
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testCascadeDeleteOfOptions" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="379" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testCascadeDeleteOfOptions
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testOptionsOrderedByWeight" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="418" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testOptionsOrderedByWeight
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+        <testcase name="testTimestampsAreAutomaticallySet" file="/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php" line="471" class="Drupal\Tests\voting_core\Kernel\VotingEntitiesTest" classname="Drupal.Tests.voting_core.Kernel.VotingEntitiesTest" assertions="0" time="0.000000">
+          <failure type="PHPUnit\Framework\AssertionFailedError">Drupal\Tests\voting_core\Kernel\VotingEntitiesTest::testTimestampsAreAutomaticallySet
+Failed to run installer database tasks: Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:367
+/app/web/core/tests/Drupal/KernelTests/KernelTestBase.php:235
+/app/web/modules/custom/voting_core/tests/src/Kernel/Service/VotingEntitiesTest.php:54</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" tests="7" assertions="0" errors="7" failures="0" skipped="0" time="0.000000">
+        <testcase name="testCastVoteThrowsExceptionWhenVotingDisabled" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="105" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionWhenVotingDisabled
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForAnonymousUser" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="134" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForAnonymousUser
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForInactiveQuestion" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="161" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForInactiveQuestion
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForInvalidOption" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="198" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForInvalidOption
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteThrowsExceptionForDuplicateVote" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="236" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteThrowsExceptionForDuplicateVote
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteSuccessfully" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="271" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteSuccessfully
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+        <testcase name="testCastVoteHandlesStorageException" file="/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php" line="313" class="Drupal\Tests\voting_core\Unit\Service\VoteManagerTest" classname="Drupal.Tests.voting_core.Unit.Service.VoteManagerTest" assertions="0" time="0.000000">
+          <error type="ArgumentCountError">Drupal\Tests\voting_core\Unit\Service\VoteManagerTest::testCastVoteHandlesStorageException
+ArgumentCountError: Too few arguments to function Drupal\voting_core\Service\VoteManager::__construct(), 4 passed in /app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php on line 89 and exactly 7 expected
+
+/app/web/modules/custom/voting_core/src/Service/VoteManager.php:29
+/app/web/modules/custom/voting_core/tests/src/Unit/Service/VoteManagerTest.php:89
+/app/vendor/bin/phpunit:122</error>
+        </testcase>
+      </testsuite>
+      <testsuite name="Drupal\Tests\voting_api\Functional\VotingApiTest" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" tests="11" assertions="0" errors="11" failures="0" skipped="0" time="0.000000">
+        <testcase name="testGetActiveQuestions" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="81" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetActiveQuestions
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testGetSingleQuestion" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="138" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetSingleQuestion
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testGetNonExistentQuestionReturns404" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="171" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetNonExistentQuestionReturns404
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testCastVoteSuccessfully" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="185" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testCastVoteSuccessfully
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testAnonymousUserCannotVote" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="224" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testAnonymousUserCannotVote
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testDuplicateVoteIsBlocked" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="257" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testDuplicateVoteIsBlocked
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testGetResultsWhenAllowed" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="300" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testGetResultsWhenAllowed
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testResultsHiddenWhenDisabled" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="359" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testResultsHiddenWhenDisabled
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testVotingBlockedWhenGloballyDisabled" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="382" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testVotingBlockedWhenGloballyDisabled
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testInvalidJsonReturnsError" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="421" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testInvalidJsonReturnsError
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+        <testcase name="testMissingFieldsInVoteRequest" file="/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php" line="436" class="Drupal\Tests\voting_api\Functional\VotingApiTest" classname="Drupal.Tests.voting_api.Functional.VotingApiTest" assertions="0" time="0.000000">
+          <error type="Drupal\Core\Installer\Exception\InstallerException">Drupal\Tests\voting_api\Functional\VotingApiTest::testMissingFieldsInVoteRequest
+Drupal\Core\Installer\Exception\InstallerException: Resolve all issues below to continue the installation. For help configuring your database server, see the &lt;a href="https://www.drupal.org/docs/installing-drupal"&gt;installation handbook&lt;/a&gt;, or contact your hosting provider.&lt;ul&gt;&lt;li&gt;Failed to connect to your database server. The server reports the following message: &lt;em class="placeholder"&gt;SQLSTATE[HY000] [1045] Access denied for user &amp;#039;drupal11&amp;#039;@&amp;#039;172.21.0.5&amp;#039; (using password: YES)&lt;/em&gt;.&lt;ul&gt;&lt;li&gt;Is the database server running?&lt;/li&gt;&lt;li&gt;Does the database exist or does the database user have sufficient privileges to create the database?&lt;/li&gt;&lt;li&gt;Have you entered the correct database name?&lt;/li&gt;&lt;li&gt;Have you entered the correct username and password?&lt;/li&gt;&lt;li&gt;Have you entered the correct database hostname and port number?&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;
+
+/app/web/core/includes/install.core.inc:981
+/app/web/core/includes/install.core.inc:611
+/app/web/core/includes/install.core.inc:564
+/app/web/core/includes/install.core.inc:122
+/app/web/core/lib/Drupal/Core/Test/FunctionalTestSetupTrait.php:326
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:532
+/app/web/core/tests/Drupal/Tests/BrowserTestBase.php:343
+/app/web/modules/custom/voting_api/tests/src/Functional/VotingApiTest.php:61</error>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

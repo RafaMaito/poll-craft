@@ -1,0 +1,29 @@
+# Admin permissions
+administer_voting_questions:
+  title: "Administer Voting Questions"
+  description: "Create, edit, and delete voting questions and their options."
+  restrict access: TRUE
+
+administer_voting_votes:
+  title: "Administer Voting Votes"
+  description: "View, analyze, and delete votes. Access voting statistics."
+  restrict access: TRUE
+
+administer_voting_settings:
+  title: "Administer Voting Settings"
+  description: "Configure global voting system settings."
+  restrict access: TRUE
+
+# User permissions
+view_voting_results:
+  title: "View Voting Results"
+  description: "View aggregated voting results for questions where results are enabled."
+
+# API permissions
+access_voting_api:
+  title: "Access Voting API"
+  description: "Access REST API endpoints for external applications."
+
+cast_vote:
+  title: "Cast Vote"
+  description: "Vote on active questions."

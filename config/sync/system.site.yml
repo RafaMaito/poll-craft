@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
+langcode: en
+uuid: 3ab8ad2b-2878-4d41-99a3-4598977df5c7
+name: 'Poll Craft'
+mail: pollcraft@test.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /voting/questions
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: null

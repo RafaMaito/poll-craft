@@ -1,0 +1,12 @@
+services:
+  voting_api.api_security_subscriber:
+    class: Drupal\voting_api\EventSubscriber\ApiSecuritySubscriber
+    arguments:
+      - "@config.factory"
+      - "@logger.channel.voting_api"
+    tags:
+      - { name: event_subscriber }
+
+  logger.channel.voting_api:
+    parent: "logger.channel_base"
+    arguments: ["voting_api"]

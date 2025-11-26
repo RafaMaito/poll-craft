@@ -1,0 +1,54 @@
+# API endpoints for Voting
+#
+# RESTFUL DESIGN PRINCIPLES:
+# - GET for retrieving data (questions, results)
+# - POST for creating data (votes)
+# - Consistent URL structure: /api/...
+# - JSON responses with proper HTTP status codes
+#
+# SECURITY:
+# - All routes require 'access content' permission by default
+# - POST routes have CSRF protection disabled (use custom auth in controller)
+# - Consider adding rate limiting in production
+
+# List all active questions
+voting_api.questions:
+  path: "/api/voting/questions"
+  defaults:
+    _controller: '\Drupal\voting_api\Controller\QuestionApiController::listQuestions'
+    _title: "Questions"
+  methods: [GET]
+  requirements:
+    _permission: "access content"
+
+# Get a specific question by identifier
+voting_api.question:
+  path: "/api/voting/questions/{identifier}"
+  defaults:
+    _controller: '\Drupal\voting_api\Controller\QuestionApiController::getQuestion'
+    _title: "Question Details"
+  methods: [GET]
+  requirements:
+    _permission: "access content"
+
+# Get results for a specific question
+voting_api.results:
+  path: "/api/voting/questions/{identifier}/results"
+  defaults:
+    _controller: '\Drupal\voting_api\Controller\ResultsApiController::getResults'
+    _title: "Results"
+  methods: [GET]
+  requirements:
+    _permission: "access content"
+
+# Cast a vote
+voting_api.vote:
+  path: "/api/voting/vote"
+  defaults:
+    _controller: '\Drupal\voting_api\Controller\VoteApiController::castVote'
+    _title: "Cast Vote"
+  methods: [POST]
+  requirements:
+    _permission: "access content"
+  options:
+    no_cache: TRUE

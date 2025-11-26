@@ -1,0 +1,323 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Voting Core module.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_schema_alter().
+ *
+ * Add performance indexes and unique constraints to voting tables.
+ * Used to optimize high-concurrency voting scenarios.
+ * @param array<string, mixed> $schema
+ *  The schema definition array, passed by reference.
+ * 
+ */
+function voting_core_schema_alter(array &$schema): void {
+  // Vote table (voting_vote).
+  if (isset($schema['voting_vote'])) {
+    $fields = $schema['voting_vote']['fields'] ?? [];
+
+    // Composite index: question + user_id (duplicate prevention).
+    if (isset($fields['question'], $fields['user_id'])) {
+      $schema['voting_vote']['indexes']['question_user'] = ['question', 'user_id'];
+      $schema['voting_vote']['unique keys']['question_user_unique'] = ['question', 'user_id'];
+    }
+
+    // Composite index: question + option (result aggregation).
+    if (isset($fields['question'], $fields['option'])) {
+      $schema['voting_vote']['indexes']['question_option'] = ['question', 'option'];
+    }
+
+    // Single index: user_id (user activity).
+    if (isset($fields['user_id'])) {
+      $schema['voting_vote']['indexes']['user_id'] = ['user_id'];
+    }
+
+    // Single index: created (time-based queries).
+    if (isset($fields['created'])) {
+      $schema['voting_vote']['indexes']['created'] = ['created'];
+    }
+  }
+
+  // Question table (voting_question).
+  if (isset($schema['voting_question'])) {
+    $fields = $schema['voting_question']['fields'] ?? [];
+
+    // Unique index: identifier (business key).
+    if (isset($fields['identifier'])) {
+      $schema['voting_question']['unique keys']['identifier'] = ['identifier'];
+    }
+
+    // Index: status.
+    if (isset($fields['status'])) {
+      $schema['voting_question']['indexes']['status'] = ['status'];
+    }
+
+    // Composite index: status + created (active + recent).
+    if (isset($fields['status'], $fields['created'])) {
+      $schema['voting_question']['indexes']['status_created'] = ['status', 'created'];
+    }
+  }
+
+  // Option table (voting_option).
+  if (isset($schema['voting_option'])) {
+    $fields = $schema['voting_option']['fields'] ?? [];
+
+    // COMPOSITE INDEX: question + identifier.
+    if (isset($fields['question'], $fields['identifier'])) {
+      $schema['voting_option']['indexes']['question_identifier'] = ['question', 'identifier'];
+      $schema['voting_option']['unique keys']['question_identifier_unique'] = ['question', 'identifier'];
+    }
+
+    // COMPOSITE INDEX: question + weight (for ordered display).
+    if (isset($fields['question'], $fields['weight'])) {
+      $schema['voting_option']['indexes']['question_weight'] = ['question', 'weight'];
+    }
+  }
+}
+
+/**
+ * Implements hook_install().
+ *
+ * Runs when the module is first enabled.
+ * Sets up configuration, roles, permissions and indexes.
+ */
+function voting_core_install(): void {
+  // Set default configuration.
+  $config = \Drupal::configFactory()->getEditable('voting_core.settings');
+  $config->set('voting_enabled', TRUE);
+  $config->set('allow_anonymous_voting', FALSE);
+  $config->set('show_results_by_default', TRUE);
+  $config->set('cache_results_ttl', 300);
+
+  // External sync settings (for queue worker).
+  $config->set('external_sync_enabled', FALSE);
+  $config->set('external_api_url', '');
+  $config->set('external_api_key', '');
+  $config->save();
+
+  // Create custom roles and assign permissions.
+  // Voting Manager role.
+  if (!Role::load('voting_manager')) {
+    $voting_manager = Role::create([
+      'id' => 'voting_manager',
+      'label' => 'Voting Manager',
+      'weight' => 3,
+    ]);
+    $voting_manager->grantPermission('administer_voting_questions');
+    $voting_manager->grantPermission('administer_voting_settings');
+    $voting_manager->grantPermission('view_voting_results');
+    $voting_manager->grantPermission('cast_vote');
+    $voting_manager->save();
+  }
+
+  // Voting Analyst role.
+  if (!Role::load('voting_analyst')) {
+    $voting_analyst = Role::create([
+      'id' => 'voting_analyst',
+      'label' => 'Voting Analyst',
+      'weight' => 4,
+    ]);
+    $voting_analyst->grantPermission('administer_voting_votes');
+    $voting_analyst->grantPermission('view_voting_results');
+    $voting_analyst->save();
+  }
+
+// Grant permissions to authenticated users.
+  /** @var \Drupal\user\Entity\Role|null $authenticated */
+  $authenticated = Role::load('authenticated');
+  if ($authenticated) {
+    $authenticated->grantPermission('cast_vote');
+    $authenticated->grantPermission('view_voting_results');
+    $authenticated->save();
+  }
+
+  // Ensure indexes and constraints are in place.
+  _voting_core_ensure_indexes();
+
+  // User feedback.
+  \Drupal::messenger()->addStatus('Voting Core module installed successfully!');
+  \Drupal::messenger()->addStatus('Created roles: Voting Manager and Voting Analyst.');
+  \Drupal::messenger()->addStatus('Database indexes optimized for high-concurrency voting.');
+
+  \Drupal::logger('voting_core')->info(
+    'Module installed with default configuration, roles and optimized indexes.'
+  );
+}
+
+/**
+ * Helper function to ensure all indexes and constraints exist.
+ *
+ * Used by:
+ * - voting_core_install()
+ * - future update hooks (voting_core_update_N()).
+ */
+function _voting_core_ensure_indexes(): void {
+  $connection = Database::getConnection();
+  $schema = $connection->schema();
+
+  // Vote table (voting_vote).
+  if ($schema->tableExists('voting_vote')) {
+    // Question + user_id index.
+    if (
+      $schema->fieldExists('voting_vote', 'question') &&
+      $schema->fieldExists('voting_vote', 'user_id')
+    ) {
+      if (!$schema->indexExists('voting_vote', 'question_user')) {
+        $schema->addIndex('voting_vote', 'question_user', ['question', 'user_id'], []);
+      }
+
+      if (!$schema->indexExists('voting_vote', 'question_user_unique')) {
+        try {
+          $schema->addUniqueKey('voting_vote', 'question_user_unique', ['question', 'user_id'], []);
+        } catch (\Exception $e) {
+          \Drupal::logger('voting_core')->warning(
+            'Could not add unique constraint question_user_unique on voting_vote: @message',
+            ['@message' => $e->getMessage()]
+          );
+        }
+      }
+    }
+
+    // Question + option index.
+    if (
+      $schema->fieldExists('voting_vote', 'question') &&
+      $schema->fieldExists('voting_vote', 'option')
+    ) {
+      if (!$schema->indexExists('voting_vote', 'question_option')) {
+        $schema->addIndex('voting_vote', 'question_option', ['question', 'option'], []);
+      }
+    }
+
+    // user_id index.
+    if ($schema->fieldExists('voting_vote', 'user_id') && !$schema->indexExists('voting_vote', 'user_id')) {
+      $schema->addIndex('voting_vote', 'user_id', ['user_id'], []);
+    }
+
+    // created index.
+    if ($schema->fieldExists('voting_vote', 'created') && !$schema->indexExists('voting_vote', 'created')) {
+      $schema->addIndex('voting_vote', 'created', ['created'], []);
+    }
+  }
+
+  // Question table (voting_question).
+  if ($schema->tableExists('voting_question')) {
+    if (
+      $schema->fieldExists('voting_question', 'identifier') &&
+      !$schema->indexExists('voting_question', 'identifier')
+    ) {
+      try {
+        $schema->addUniqueKey('voting_question', 'identifier', ['identifier']);
+      } catch (\Exception $e) {
+        \Drupal::logger('voting_core')->warning(
+          'Could not add unique key identifier on voting_question: @message',
+          ['@message' => $e->getMessage()]
+        );
+      }
+    }
+
+    if (
+      $schema->fieldExists('voting_question', 'status') &&
+      !$schema->indexExists('voting_question', 'status')
+    ) {
+      $schema->addIndex('voting_question', 'status', ['status'], []);
+    }
+
+    if (
+      $schema->fieldExists('voting_question', 'status') &&
+      $schema->fieldExists('voting_question', 'created') &&
+      !$schema->indexExists('voting_question', 'status_created')
+    ) {
+      $schema->addIndex('voting_question', 'status_created', ['status', 'created'], []);
+    }
+  }
+
+  // Option table (voting_option).
+  if ($schema->tableExists('voting_option')) {
+    if (
+      $schema->fieldExists('voting_option', 'question') &&
+      $schema->fieldExists('voting_option', 'identifier')
+    ) {
+      if (!$schema->indexExists('voting_option', 'question_identifier')) {
+        $schema->addIndex('voting_option', 'question_identifier', ['question', 'identifier'], []);
+      }
+
+      if (!$schema->indexExists('voting_option', 'question_identifier_unique')) {
+        try {
+          $schema->addUniqueKey(
+            'voting_option',
+            'question_identifier_unique',
+            ['question', 'identifier']
+          );
+        } catch (\Exception $e) {
+          \Drupal::logger('voting_core')->warning(
+            'Could not add unique constraint question_identifier_unique on voting_option: @message',
+            ['@message' => $e->getMessage()]
+          );
+        }
+      }
+    }
+
+    if (
+      $schema->fieldExists('voting_option', 'question') &&
+      $schema->fieldExists('voting_option', 'weight') &&
+      !$schema->indexExists('voting_option', 'question_weight')
+    ) {
+      $schema->addIndex('voting_option', 'question_weight', ['question', 'weight'], []);
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Reverse of voting_core_install().
+ */
+function voting_core_uninstall(): void {
+  // Remove configuration.
+  $config = \Drupal::configFactory()->getEditable('voting_core.settings');
+  $config->delete();
+
+  // Delete custom roles.
+  foreach (['voting_manager', 'voting_analyst'] as $role_id) {
+    if ($role = Role::load($role_id)) {
+      $role->delete();
+    }
+  }
+
+  // Remove permissions from authenticated users.
+  /** @var \Drupal\user\Entity\Role|null $authenticated */
+  $authenticated = Role::load('authenticated');
+  if ($authenticated) {
+    $authenticated->revokePermission('cast_vote');
+    $authenticated->revokePermission('view_voting_results');
+    $authenticated->save();
+  }
+
+  // Delete voting data from tables (tables are dropped by entity schema).
+  $connection = Database::getConnection();
+  $schema = $connection->schema();
+
+  $tables = [
+    'voting_vote',
+    'voting_option',
+    'voting_question',
+  ];
+
+  foreach ($tables as $table) {
+    if ($schema->tableExists($table)) {
+      $connection->truncate($table)->execute();
+    }
+  }
+
+  \Drupal::logger('voting_core')->info(
+    'Voting Core module uninstalled. Configuration, roles, permissions and voting data were removed.'
+  );
+}

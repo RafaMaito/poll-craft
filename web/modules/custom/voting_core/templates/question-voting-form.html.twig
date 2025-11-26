@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Template for voting form.
+ *
+ * Available variables:
+ * - question: Question data
+ *   - title: Question title
+ *   - description: Question description
+ *   - options: Array of options
+ * - form: Drupal form render array
+ */
+#}
+<div class="question-voting">
+	<div class="question-voting__question">
+		<h1>{{ question.title }}</h1>
+
+		{% if question.description %}
+			<p class="question-voting__description">{{ question.description }}</p>
+		{% endif %}
+	</div>
+
+	<div class="question-voting__form">
+		{{ form }}
+		</div>
+
+		<div class="question-voting__actions">
+			<a href="{{ path('voting_core.question_list') }}">{{ 'Back to questions'|t }}</a>
+		</div>
+	</div>

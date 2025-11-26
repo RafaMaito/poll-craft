@@ -1,0 +1,13 @@
+# YAML file for voting_core module action links.
+entity.question.add_form:
+  route_name: entity.question.add_form
+  title: "Add Question"
+  appears_on:
+    - entity.question.collection
+
+# YAML file for voting_core module action links.
+entity.option.add_form:
+  route_name: entity.option.add_form
+  title: "Add Option"
+  appears_on:
+    - entity.option.collection

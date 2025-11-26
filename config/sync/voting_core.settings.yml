@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: 27ZMlaZfOXIxv8iXmj-Nvzaa0TglrlU_czPi6oPUG-M
+voting_enabled: 1
+show_results_by_default: 1
+allow_anonymous_voting: 0
+max_votes_per_question: 1
+global_voting_enabled: true
+default_show_results: true
+api_rate_limit_per_ip: '1000'
+api_rate_limit_window: '60'
+external_sync_enabled: false
+external_api_url: ''
+external_api_key: ''
+external_sync_queue_name: voting_external_sync
+cache_results_ttl: '300'

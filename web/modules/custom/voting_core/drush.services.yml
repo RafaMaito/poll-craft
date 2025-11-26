@@ -1,0 +1,6 @@
+services:
+  voting_core.drush_commands:
+    class: Drupal\voting_core\Commands\VotingCoreCommands
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: drush.command }

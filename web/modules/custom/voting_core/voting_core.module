@@ -1,0 +1,212 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * @file
+ * Voting Core module file.
+ */
+
+/**
+ * Implements hook_theme().
+ *
+ * Defines custom templates for the voting system.
+ *
+ * @param array<string, mixed> $existing
+ *   Existing implementations.
+ * @param string $type
+ *   The type of hook (theme, theme_engine, etc.).
+ * @param string $theme
+ *   The name of the theme.
+ * @param string $path
+ *   The path to the theme.
+ *
+ * @return array<string, array<string, mixed>>
+ *   An array of theme hook definitions.
+ */
+function voting_core_theme(array $existing, $type, $theme, $path): array {
+  return [
+    'question_list' => [
+      'variables' => [
+        'questions' => [],
+        'voting_enabled' => TRUE,
+      ],
+      'template' => 'question-list',
+    ],
+    'question_voting_form' => [
+      'variables' => [
+        'vote' => [],
+        'form' => [],
+      ],
+      'template' => 'question-voting-form',
+    ],
+    'question_results' => [
+      'variables' => [
+        'results' => [],
+      ],
+      'template' => 'question-results',
+    ],
+    'question_already_voted' => [
+      'variables' => [
+        'vote' => [],
+      ],
+      'template' => 'question-already-voted',
+    ],
+    'admin_dashboard' => [
+      'variables' => [
+        'user_name' => NULL,
+        'statistics' => [],
+        'recent_questions' => [],
+        'voting_enabled' => TRUE,
+        'quick_actions' => [],
+      ],
+      'template' => 'admin-dashboard',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ *
+ * Adds custom CSS classes to voting-related pages for styling.
+ *
+ * @param array<string, mixed> $variables
+ *   The variables for the page template.
+ */
+function voting_core_preprocess_page(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  // Add base class for all voting_core routes.
+  if (is_string($route_name) && str_starts_with($route_name, 'voting_core.')) {
+    $variables['attributes']['class'][] = 'page-voting-system';
+
+    switch ($route_name) {
+      case 'voting_core.question_list':
+        $variables['attributes']['class'][] = 'page-question-list';
+        break;
+
+      case 'voting_core.view_question':
+        $variables['attributes']['class'][] = 'page-question-voting';
+        break;
+
+      case 'voting_core.view_results':
+        $variables['attributes']['class'][] = 'page-voting-results';
+        break;
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ *
+ * Invalidates caches related to questions when a question entity is updated.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The entity that was updated.
+ */
+function voting_core_entity_update(EntityInterface $entity): void {
+  if ($entity->getEntityTypeId() === 'vote') {
+    Cache::invalidateTags([
+      'question_list',
+      'question:' . $entity->id(),
+      'question_results',
+    ]);
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ *
+ * Invalidates caches related to questions when a question entity is deleted.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The entity that was deleted.
+ */
+function voting_core_entity_delete(EntityInterface $entity): void {
+  if ($entity->getEntityTypeId() === 'vote') {
+    Cache::invalidateTags([
+      'question_list',
+      'question:' . $entity->id(),
+      'question_results',
+    ]);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Redirects admin users to voting dashboard after login.
+ */
+function voting_core_form_user_login_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  // Adiciona nosso submit handler ao array de submit do form.
+  $form['#submit'][] = 'voting_core_user_login_redirect_submit';
+}
+
+
+/**
+ * Custom submit handler for the login form.
+ *
+ * - Admins -> /admin/voting/dashboard
+ * - Authenticated users -> /voting/questions
+ * - Anonymous users -> default flow
+ */
+function voting_core_user_login_redirect_submit(array &$form, FormStateInterface $form_state): void {
+  // The original Drupal code to get the user ID after login.
+  // @see \Drupal\user\Form\UserLoginForm::submitForm()
+  $uid = $form_state->get('uid');
+  if (empty($uid)) {
+    return;
+  }
+
+  /** @var \Drupal\user\UserInterface|null $account */
+  $account = \Drupal::entityTypeManager()
+    ->getStorage('user')
+    ->load($uid);
+
+  if (!$account) {
+    return;
+  }
+
+  // Do not override an explicit destination (?destination=...).
+  $request = \Drupal::service('request_stack')->getCurrentRequest();
+  if ($request->query->has('destination') || $request->request->has('destination')) {
+    return;
+  }
+
+  // Check a specific permission from your module:
+    $is_admin = $account->hasPermission('administer_voting_settings')
+    || $account->hasPermission('administer_voting_questions')
+    || $account->hasPermission('administer_voting_votes');
+
+  // Ensure that user 1 always goes there.
+  if ($account->id() === 1) {
+    $is_admin = TRUE;
+  }
+
+    if ($is_admin) {
+    $url = Url::fromRoute('voting_core.admin_dashboard');
+    $form_state->setRedirectUrl($url);
+    return;
+  }
+
+    if (!$account->isAnonymous()) {
+    $url = Url::fromRoute('voting_core.question_list');
+    $form_state->setRedirectUrl($url);
+    return;
+  }
+
+  if (!$is_admin) {
+    // Regular user: let Drupal's default flow continue.
+    return;
+  }
+
+  // Redirects to the dashboard route.
+  // Ensure that this route exists in your routing.yml as `voting_core.admin_dashboard`.
+  $url = Url::fromRoute('voting_core.admin_dashboard');
+  $form_state->setRedirectUrl($url);
+}
