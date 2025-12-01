@@ -309,40 +309,40 @@ Finished 10000 requests
 
 Server Software:        nginx
 Server Hostname:        localhost
-Server Port:            32783
+Server Port:            32786
 
 Document Path:          /api/voting/questions
-Document Length:        248 bytes
+Document Length:        6871 bytes
 
 Concurrency Level:      50
-Time taken for tests:   1.000 seconds
+Time taken for tests:   66.890 seconds
 Complete requests:      10000
 Failed requests:        0
-Non-2xx responses:      10000
-Total transferred:      3930000 bytes
-HTML transferred:       2480000 bytes
-Requests per second:    10003.08 [#/sec] (mean)
-Time per request:       4.998 [ms] (mean)
-Time per request:       0.100 [ms] (mean, across all concurrent requests)
-Transfer rate:          3839.07 [Kbytes/sec] received
+Keep-Alive requests:    10000
+Total transferred:      73630000 bytes
+HTML transferred:       68710000 bytes
+Requests per second:    149.50 [#/sec] (mean)
+Time per request:       334.448 [ms] (mean)
+Time per request:       6.689 [ms] (mean, across all concurrent requests)
+Transfer rate:          1074.97 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0    2   0.7      2       7
-Processing:     0    3   1.2      3      14
-Waiting:        0    2   1.1      2      13
-Total:          1    5   1.3      5      15
+Connect:        0    0   0.1      0       3
+Processing:    29  333  27.9    330     474
+Waiting:       29  333  27.9    330     474
+Total:         29  333  27.9    330     477
 
 Percentage of the requests served within a certain time (ms)
-  50%      5
-  66%      5
-  75%      5
-  80%      6
-  90%      7
-  95%      7
-  98%      9
-  99%     10
- 100%     15 (longest request)
+  50%    330
+  66%    341
+  75%    347
+  80%    350
+  90%    365
+  95%    386
+  98%    404
+  99%    414
+ 100%    477 (longest request)
 ```
 
 ## Start no ambiente
