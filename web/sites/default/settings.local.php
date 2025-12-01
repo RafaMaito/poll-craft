@@ -149,15 +149,7 @@
  * the language or field module.
  */
 # $settings['config_exclude_modules'] = ['devel', 'stage_file_proxy'];
-/**
- * Settings for Poll Craft - AMBEV
- * Simples e funcional!
- */
 
-/**
- * Settings for Poll Craft - AMBEV
- * Compatível com Drupal 11!
- */
 
 // Database settings.
 $databases['default']['default'] = array (
@@ -180,7 +172,7 @@ $is_development = (getenv('APP_ENV') === 'local' || PHP_SAPI === 'cli');
 if (
   extension_loaded('redis') &&
   class_exists('Drupal\redis\ClientFactory') &&
-  file_exists($app_root . '/modules/redis')
+  file_exists($app_root . '/modules/contrib/redis')
 ) {
   $settings['redis.connection']['interface'] = 'PhpRedis';
   $settings['redis.connection']['host'] = getenv('REDIS_HOST') ?: 'redis';
@@ -196,8 +188,8 @@ if ($is_development) {
   
   // Disable render cache and page cache
   $settings['cache']['bins']['render'] = 'cache.backend.memory';
-  $settings['cache']['bins']['page'] = 'cache.backend.memory';
-  $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.memory';
+  // $settings['cache']['bins']['page'] = 'cache.backend.memory';
+  // $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.memory';
   
   // Do not check file permissions
   $settings['skip_permissions_hardening'] = TRUE;
