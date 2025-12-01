@@ -223,67 +223,128 @@ Exemplo Response:
 ---
 ## Benchmark
 
+### Sem Redis
+
 Comando:
 
-    ab -n 1000 -c 1000 http://poll-craft.lndo.site/api/voting/vote
+    ab -n 10000 -c 50 https://localhost:32771/api/voting/questions  
 
 Resultado:
 ```
-   This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
+This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+Benchmarking localhost (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+Server Software:        nginx
+Server Hostname:        localhost
+Server Port:            32771
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES256-GCM-SHA384,2048,256
+Server Temp Key:        X25519 253 bits
+TLS Server Name:        localhost
+Document Path:          /api/voting/questions
+Document Length:        6871 bytes
+Concurrency Level:      50
+Time taken for tests:   69.256 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      73580000 bytes
+HTML transferred:       68710000 bytes
+Requests per second:    144.39 [#/sec] (mean)
+Time per request:       346.278 [ms] (mean)
+Time per request:       6.926 [ms] (mean, across all concurrent requests)
+Transfer rate:          1037.54 [Kbytes/sec] received
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        2    5   2.5      5      39
+Processing:    24  340  24.4    336     532
+Waiting:       24  339  24.4    336     532
+Total:         42  345  24.1    342     537
+Percentage of the requests served within a certain time (ms)
+  50%    342
+  66%    347
+  75%    351
+  80%    355
+  90%    367
+  95%    379
+  98%    399
+  99%    426
+ 100%    537 (longest request)
+```
+### Com Redis
+
+Comando:
+
+    ab -n 10000 -c 50 http://localhost:32783/api/voting/questions
+
+Resultado:
+```
+This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
 
-Benchmarking poll-craft.lndo.site (be patient)
-Completed 100 requests
-Completed 200 requests
-Completed 300 requests
-Completed 400 requests
-Completed 500 requests
-Completed 600 requests
-Completed 700 requests
-Completed 800 requests
-Completed 900 requests
+Benchmarking localhost (be patient)
 Completed 1000 requests
-Finished 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
 
 
 Server Software:        nginx
-Server Hostname:        poll-craft.lndo.site
-Server Port:            80
+Server Hostname:        localhost
+Server Port:            32783
 
-Document Path:          /api/voting/vote
-Document Length:        19549 bytes
+Document Path:          /api/voting/questions
+Document Length:        248 bytes
 
-Concurrency Level:      1000
-Time taken for tests:   22.470 seconds
-Complete requests:      1000
+Concurrency Level:      50
+Time taken for tests:   1.000 seconds
+Complete requests:      10000
 Failed requests:        0
-Non-2xx responses:      1000
-Total transferred:      20041000 bytes
-HTML transferred:       19549000 bytes
-Requests per second:    44.50 [#/sec] (mean)
-Time per request:       22470.340 [ms] (mean)
-Time per request:       22.470 [ms] (mean, across all concurrent requests)
-Transfer rate:          870.98 [Kbytes/sec] received
+Non-2xx responses:      10000
+Total transferred:      3930000 bytes
+HTML transferred:       2480000 bytes
+Requests per second:    10003.08 [#/sec] (mean)
+Time per request:       4.998 [ms] (mean)
+Time per request:       0.100 [ms] (mean, across all concurrent requests)
+Transfer rate:          3839.07 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0   17   3.1     15      25
-Processing:   107 11169 6354.5  10992   22356
-Waiting:       81 11169 6354.6  10992   22356
-Total:        119 11186 6352.1  11007   22371
+Connect:        0    2   0.7      2       7
+Processing:     0    3   1.2      3      14
+Waiting:        0    2   1.1      2      13
+Total:          1    5   1.3      5      15
 
 Percentage of the requests served within a certain time (ms)
-  50%  11007
-  66%  14586
-  75%  16686
-  80%  17778
-  90%  20055
-  95%  21150
-  98%  21870
-  99%  22081
- 100%  22371 (longest request)
+  50%      5
+  66%      5
+  75%      5
+  80%      6
+  90%      7
+  95%      7
+  98%      9
+  99%     10
+ 100%     15 (longest request)
 ```
+
 ## Start no ambiente
 
 ### Commandos:
@@ -300,7 +361,7 @@ Percentage of the requests served within a certain time (ms)
 
 #### Importar banco de dados 
 ```
- lando drush db-import db.sql
+ lando drush sql-cli < ./database/pollcraft.sql
 ```
 #### Habilitar módulos 
 ```
