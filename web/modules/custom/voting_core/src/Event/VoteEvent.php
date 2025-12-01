@@ -69,9 +69,18 @@ final class VoteEvent extends Event {
 
   /**
    * Convenience: timestamp.
+   *
+   * Returns the vote creation timestamp based on the "created" field.
+   * Falls back to the current request time if the field is empty.
    */
   public function getTimestamp(): int {
-    /** @var \Drupal\voting_core\Entity\Vote $this->vote */
-    return (int) $this->vote->getCreatedTime();
+    $created = $this->vote->get('created')->value;
+
+    // Fallback to current time if "created" is NULL.
+    if ($created === NULL) {
+      return \Drupal::time()->getRequestTime();
+    }
+
+    return (int) $created;
   }
 }

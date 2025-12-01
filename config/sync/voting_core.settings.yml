@@ -8,7 +8,7 @@ global_voting_enabled: true
 default_show_results: true
 api_rate_limit_per_ip: '1000'
 api_rate_limit_window: '60'
-external_sync_enabled: false
+external_sync_enabled: true
 external_api_url: ''
 external_api_key: ''
 external_sync_queue_name: voting_external_sync
