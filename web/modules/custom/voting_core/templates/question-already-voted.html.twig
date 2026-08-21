@@ -7,6 +7,7 @@
  * - question: Question data
  */
 #}
+{{ attach_library('voting_core/front') }}
 <div class="question-already-voted">
 	<h1>{{ question.title }}</h1>
 
@@ -20,36 +21,3 @@
 		<a href="{{ path('voting_core.question_list') }}" class="button">{{ 'Back to questions'|t }}</a>
 	</div>
 </div>
-
-<style>
-	.question-already-voted {
-		max-width: 600px;
-		margin: 2rem auto;
-		padding: 2rem;
-		text-align: center;
-	}
-
-	.question-already-voted__message {
-		background-color: #d4edda;
-		border: 1px solid #c3e6cb;
-		border-radius: 4px;
-		padding: 1.5rem;
-		margin: 2rem 0;
-	}
-
-	.question-already-voted__message p:first-child {
-		font-size: 1.2rem;
-		font-weight: bold;
-		color: #155724;
-		margin-bottom: 0.5rem;
-	}
-
-	.question-already-voted__message p:last-child {
-		color: #155724;
-		margin: 0;
-	}
-
-	.question-already-voted__actions {
-		margin-top: 2rem;
-	}
-</style>

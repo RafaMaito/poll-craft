@@ -23,6 +23,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 final class QuestionListBuilder extends EntityListBuilder {
 
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
   protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
@@ -106,7 +111,10 @@ final class QuestionListBuilder extends EntityListBuilder {
   }
 
   /**
-   * {@inheritdoc}
+   * Builds the default operations for a Question entity.
+   *
+   * @return array<string, mixed>
+   *   The operations array.
    */
   public function getDefaultOperations(EntityInterface $entity): array {
     /** @var \Drupal\voting_core\Entity\Question $entity */
@@ -137,6 +145,7 @@ final class QuestionListBuilder extends EntityListBuilder {
 
     return $operations;
   }
+
   /**
    * Count options for a question.
    */

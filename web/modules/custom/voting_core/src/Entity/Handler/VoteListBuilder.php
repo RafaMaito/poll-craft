@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a list builder for Vote entities.
  *
  * This list builder displays votes in a table format with key information.
- * 
+ *
  * Provides a table view with:
  * - Vote ID
  * - User who voted
@@ -46,6 +46,9 @@ final class VoteListBuilder extends EntityListBuilder {
 
   /**
    * Builds the header for the Vote list table.
+   *
+   * @return array<string, mixed>
+   *   The header array.
    */
   public function buildHeader(): array {
     $header = [
@@ -61,13 +64,18 @@ final class VoteListBuilder extends EntityListBuilder {
 
   /**
    * Builds a row for the Vote entity.
-   * 
+   *
+   * @return array<string, mixed>
+   *   The row array.
    */
   public function buildRow(EntityInterface $entity): array {
     /** @var \Drupal\voting_core\Entity\Vote $entity */
 
+    /** @var \Drupal\user\UserInterface|null $user */
     $user = $entity->get('user_id')->entity;
+    /** @var \Drupal\voting_core\Entity\Question|null $question */
     $question = $entity->get('question')->entity;
+    /** @var \Drupal\voting_core\Entity\Option|null $option */
     $option = $entity->get('option')->entity;
 
     $created = $entity->get('created')->value;
@@ -88,8 +96,11 @@ final class VoteListBuilder extends EntityListBuilder {
 
   /**
    * Builds the default operations for a Vote entity.
+   *
+   * @return array<string, mixed>
+   *   The operations array.
    */
-  protected function getDefaultOperations(EntityInterface $entity): array {
+  public function getDefaultOperations(EntityInterface $entity): array {
     $operations = parent::getDefaultOperations($entity);
 
     // Remove 'edit' operation - votes should not be edited.
@@ -97,5 +108,4 @@ final class VoteListBuilder extends EntityListBuilder {
 
     return $operations;
   }
-
 }

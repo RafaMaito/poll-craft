@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a voting form for questions.
+ *
  * This form handles:
  * - Displaying the voting options for a question.
  * - Validating user input.
@@ -56,7 +57,6 @@ final class VotingForm extends FormBase {
   }
 
   /**
-   * Creates an instance of the form.
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): self {
@@ -68,7 +68,6 @@ final class VotingForm extends FormBase {
   }
 
   /**
-   * Gets the form ID.
    * {@inheritdoc}
    */
   public function getFormId(): string {
@@ -77,18 +76,19 @@ final class VotingForm extends FormBase {
 
   /**
    * Builds the voting form.
-   * @param array $form
-   *  The form array.
+   *
+   * @param array<string, mixed> $form
+   *   The form array.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   * The form state.
+   *   The form state.
    * @param string|null $question_identifier
-   *  The question identifier from the route.
-   * @return array
-   *  The built form array.
-   * 
+   *   The question identifier from the route.
+   *
+   * @return array<string, mixed>
+   *   The built form array.
    */
   public function buildForm(array $form, FormStateInterface $form_state, ?string $question_identifier = NULL): array {
-    // Check if voting is globally enabled
+    // Check if voting is globally enabled.
     $config = $this->configFactory->get('voting_core.settings');
     $voting_enabled = $config->get('voting_enabled');
 
@@ -116,7 +116,7 @@ final class VotingForm extends FormBase {
       return $form;
     }
 
-    // Load and validate question
+    // Load and validate question.
     $question = $this->questionManager->getQuestionForApi($question_identifier);
 
     if (!$question) {
@@ -137,13 +137,13 @@ final class VotingForm extends FormBase {
     // Store question identifier in form state.
     $form_state->set('question_identifier', $question_identifier);
 
-    // Check if user already voted
+    // Check if user already voted.
     $has_voted = $this->voteManager->hasUserVoted($question_identifier);
 
     if ($has_voted) {
       $user_vote = $this->voteManager->getUserVote($question_identifier);
 
-      // Build "already voted" message
+      // Build "already voted" message.
       $form['already_voted'] = [
         '#type' => 'container',
         '#attributes' => ['class' => ['voting-already-voted']],
@@ -197,7 +197,7 @@ final class VotingForm extends FormBase {
       return $form;
     }
 
-    // Build voting form
+    // Build voting form.
     $form['question_title'] = [
       '#type' => 'html_tag',
       '#tag' => 'h2',
@@ -246,7 +246,11 @@ final class VotingForm extends FormBase {
 
   /**
    * Submit handler for the voting form.
-   * {@inheritdoc}
+   *
+   * @param array<string, mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     // Double-check voting is enabled.
@@ -276,12 +280,10 @@ final class VotingForm extends FormBase {
         $form_state->setRedirect('voting_core.view_results', [
           'identifier' => $question_identifier,
         ]);
-      }
-      else {
+      } else {
         $form_state->setRedirect('voting_core.question_list');
       }
-    }
-    catch (\RuntimeException $e) {
+    } catch (\RuntimeException $e) {
       $this->messenger()->addError(
         $this->t('An error occurred while recording your vote: @message', [
           '@message' => $e->getMessage(),
@@ -291,5 +293,4 @@ final class VotingForm extends FormBase {
       $form_state->setRebuild(TRUE);
     }
   }
-
 }

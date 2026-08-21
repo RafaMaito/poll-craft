@@ -19,12 +19,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * not here. This follows Drupal best practices where forms
  * process their own submissions.
  */
-class VotingInterfaceController extends ControllerBase {
+final class VotingInterfaceController extends ControllerBase {
 
   public function __construct(
     private readonly QuestionManager $questionManager,
     private readonly VoteManager $voteManager,
-  ) {}
+  ) {
+  }
 
   /**
    * {@inheritdoc}
@@ -38,41 +39,47 @@ class VotingInterfaceController extends ControllerBase {
 
   /**
    * Lists all active questions.
-   * Each question indicates if the user has voted.
-   * Reads global config to check if voting is enabled.
-   * Returns a render array for theming.
+   *
+   * Each question indicates if the user has voted. Reads global config to
+   * check if voting is enabled. Returns a render array for theming.
+   *
+   * @return array<string, mixed>
+   *   The render array.
    */
-public function listQuestions(): array {
-  // Search for active questions.
-  $questions = $this->questionManager->getActiveQuestionsForApi();
+  public function listQuestions(): array {
+    // Search for active questions.
+    $questions = $this->questionManager->getActiveQuestionsForApi();
 
-  foreach ($questions as &$question) {
-    $question['has_voted'] = $this->voteManager->hasUserVoted($question['identifier']);
-  }
+    foreach ($questions as &$question) {
+      $question['has_voted'] = $this->voteManager->hasUserVoted($question['identifier']);
+    }
 
-  // Read global config.
-  $votingEnabled = (bool) $this->config('voting_core.settings')
-    ->get('voting_enabled');
+    // Read global config.
+    $votingEnabled = (bool) $this->config('voting_core.settings')
+      ->get('voting_enabled');
 
-  return [
-    '#theme' => 'question_list',
-    '#questions' => $questions,
-    '#voting_enabled' => $votingEnabled,
-    '#cache' => [
-      'contexts' => ['user'],
-      'tags' => [
-        'question_list',
-        'config:voting_core.settings',
+    return [
+      '#theme' => 'question_list',
+      '#questions' => $questions,
+      '#voting_enabled' => $votingEnabled,
+      '#cache' => [
+        'contexts' => ['user'],
+        'tags' => [
+          'question_list',
+          'config:voting_core.settings',
+        ],
+        'max-age' => 300,
       ],
-      'max-age' => 300,
-    ],
-  ];
-}
+    ];
+  }
 
   /**
    * Displays a single question with voting form.
-   * 
+   *
    * If user has already voted, shows results or message.
+   *
+   * @return array<string, mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+   *   The render array or a redirect response.
    */
   public function viewQuestion(string $identifier): array|RedirectResponse {
     $question = $this->questionManager->getQuestionForApi($identifier);
@@ -109,9 +116,12 @@ public function listQuestions(): array {
 
   /**
    * Displays results for a question.
-   * 
-   * If results are not available, 
+   *
+   * If results are not available,
    * redirects back to question list.
+   *
+   * @return array<string, mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+   *   The render array or a redirect response.
    */
   public function viewResults(string $identifier): array|RedirectResponse {
     $results = $this->questionManager->getResultsForApi($identifier);
@@ -128,7 +138,10 @@ public function listQuestions(): array {
       '#results' => $results,
       '#cache' => [
         'contexts' => ['user'],
-        'tags' => ['question:' . $identifier],
+        'tags' => [
+          'question:' . $results['question_id'],
+          'question_results',
+        ],
         'max-age' => 300,
       ],
     ];

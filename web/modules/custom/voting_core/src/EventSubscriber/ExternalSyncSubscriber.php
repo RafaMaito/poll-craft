@@ -17,7 +17,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * GOAL:
  * - Decouple external system synchronization from core voting logic.
  * - Use Drupal's Queue API for reliable background processing.
- * 
  */
 final class ExternalSyncSubscriber implements EventSubscriberInterface {
 
@@ -25,10 +24,10 @@ final class ExternalSyncSubscriber implements EventSubscriberInterface {
     private readonly ConfigFactoryInterface $configFactory,
     private readonly QueueFactory $queueFactory,
     private readonly LoggerInterface $logger,
-  ) {}
+  ) {
+  }
 
   /**
-   * Gets the subscribed events.
    * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
@@ -39,8 +38,9 @@ final class ExternalSyncSubscriber implements EventSubscriberInterface {
 
   /**
    * Reacts to a vote being cast and enqueues an external sync job.
+   *
    * @param \Drupal\voting_core\Event\VoteEvent $event
-   *  The vote event.
+   *   The vote event.
    */
   public function onVoteCast(VoteEvent $event): void {
     $config = $this->configFactory->get('voting_core.settings');

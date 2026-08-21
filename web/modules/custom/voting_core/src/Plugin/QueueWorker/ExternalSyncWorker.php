@@ -22,6 +22,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 final class ExternalSyncWorker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
+  /**
+   * Constructs the external sync worker.
+   *
+   * @param array<string, mixed> $configuration
+   *   The plugin configuration.
+   * @param string $plugin_id
+   *   The plugin ID.
+   * @param array<string, mixed> $plugin_definition
+   *   The plugin definition.
+   * @param \GuzzleHttp\ClientInterface $httpClient
+   *   The HTTP client.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger.
+   */
   public function __construct(
     array $configuration,
     $plugin_id,
@@ -46,6 +62,15 @@ final class ExternalSyncWorker extends QueueWorkerBase implements ContainerFacto
    *   'question_identifier' => "favorite-color",
    *   'option_identifier' => "red"
    * ]
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The container.
+   * @param array<string, mixed> $configuration
+   *   The plugin configuration.
+   * @param string $plugin_id
+   *   The plugin ID.
+   * @param array<string, mixed> $plugin_definition
+   *   The plugin definition.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
     return new self(
@@ -59,7 +84,6 @@ final class ExternalSyncWorker extends QueueWorkerBase implements ContainerFacto
   }
 
   /**
-   * Processes a single item from the external sync queue.
    * {@inheritdoc}
    */
   public function processItem($data): void {
@@ -100,21 +124,19 @@ final class ExternalSyncWorker extends QueueWorkerBase implements ContainerFacto
       ]);
 
       $this->logger->info('External sync successful.', [
-        'vote_id' => $data['vote_id'] ?? null,
+        'vote_id' => $data['vote_id'] ?? NULL,
         'status_code' => $response->getStatusCode(),
       ]);
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
       // Throwing here makes the item go back to queue for retry.
       $this->logger->error('External sync failed: @msg', [
         '@msg' => $e->getMessage(),
-        'vote_id' => $data['vote_id'] ?? null,
-        'question_id' => $data['question_id'] ?? null,
-        'option_id' => $data['option_id'] ?? null,
+        'vote_id' => $data['vote_id'] ?? NULL,
+        'question_id' => $data['question_id'] ?? NULL,
+        'option_id' => $data['option_id'] ?? NULL,
       ]);
 
       throw $e;
     }
   }
-
 }

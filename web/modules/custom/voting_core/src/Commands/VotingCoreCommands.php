@@ -9,10 +9,10 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Drush commands for Voting Core.
- * 
+ *
  * Provides CLI utilities to manage and test the voting system.
+ *
  * @package Drupal\voting_core\Commands
- * 
  */
 final class VotingCoreCommands extends DrushCommands {
 
@@ -24,13 +24,13 @@ final class VotingCoreCommands extends DrushCommands {
   /**
    * Create sample questions with options.
    *
-   * @command voting:create-questions
-   * @aliases vcq
-   *
    * @param int $num_questions
    *   Number of questions to create.
    * @param int $num_options
    *   Number of options per question.
+   *
+   * @command voting:create-questions
+   * @aliases vcq
    *
    * @usage drush vcq 10 4
    *   Creates 10 questions with 4 options each.
@@ -73,4 +73,5 @@ final class VotingCoreCommands extends DrushCommands {
 
     $this->io()->success("Done! Created $num_questions questions with $num_options options each.");
   }
+
 }

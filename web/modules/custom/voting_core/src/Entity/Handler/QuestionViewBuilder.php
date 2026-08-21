@@ -17,10 +17,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * This customizes how questions are displayed, particularly
  * showing their related options inline.
- * 
+ *
  * Provides a detailed view with:
  * - Question title and description
- * - List of associated options with identifiers, 
+ * - List of associated options with identifiers,
  *   titles, descriptions, and weights
  * - Link to add new options
  */
@@ -43,13 +43,16 @@ final class QuestionViewBuilder extends EntityViewBuilder {
 
   /**
    * Customizes the full view mode to include options.
-   * 
+   *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity being viewed.
    * @param string $view_mode
    *   The view mode.
    * @param string|null $langcode
    *   The language code.
+   *
+   * @return array<string, mixed>
+   *   The render array.
    */
   public function view(EntityInterface $entity, $view_mode = 'full', $langcode = NULL): array {
     $build = parent::view($entity, $view_mode, $langcode);
@@ -66,7 +69,8 @@ final class QuestionViewBuilder extends EntityViewBuilder {
    *
    * @param \Drupal\Core\Entity\EntityInterface $question
    *   The Question entity.
-   * @return array
+   *
+   * @return array<string, mixed>
    *   Renderable array for the options section.
    */
   protected function buildOptionsSection(EntityInterface $question): array {
@@ -142,5 +146,4 @@ final class QuestionViewBuilder extends EntityViewBuilder {
       ],
     ];
   }
-
 }

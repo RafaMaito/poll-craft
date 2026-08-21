@@ -13,6 +13,7 @@
  *   - total_votes: Total number of votes
  */
 #}
+{{ attach_library('voting_core/front') }}
 <div class="results">
 	<div class="results__header">
 		<h1>{{ results.question.title }}</h1>
@@ -49,67 +50,3 @@
 		<a href="{{ path('voting_core.question_list') }}" class="button">{{ 'Back to questions'|t }}</a>
 	</div>
 </div>
-
-<style>
-	.results {
-		max-width: 800px;
-		margin: 2rem auto;
-		padding: 2rem;
-	}
-
-	.results__header {
-		margin-bottom: 2rem;
-	}
-
-	.results__total {
-		color: #666;
-		font-size: 0.9rem;
-	}
-
-	.results__item {
-		margin-bottom: 1.5rem;
-	}
-
-	.results__item-header {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 0.5rem;
-	}
-
-	.results__option-title {
-		font-weight: bold;
-	}
-
-	.results__votes {
-		color: #666;
-		font-size: 0.9rem;
-	}
-
-	.results__bar {
-		height: 30px;
-		background-color: #f0f0f0;
-		border-radius: 4px;
-		overflow: hidden;
-		position: relative;
-	}
-
-	.results__bar-fill {
-		height: 100%;
-		background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
-		transition: width 0.3s ease;
-		display: flex;
-		align-items: center;
-		padding: 0 10px;
-	}
-
-	.results__percentage {
-		color: white;
-		font-weight: bold;
-		font-size: 0.85rem;
-	}
-
-	.results__actions {
-		margin-top: 2rem;
-		text-align: center;
-	}
-</style>

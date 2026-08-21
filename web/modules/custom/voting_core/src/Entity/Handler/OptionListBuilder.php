@@ -9,11 +9,11 @@ use Drupal\Core\Entity\EntityListBuilder;
 
 /**
  * List builder for Option entities.
- * 
+ *
  * Provides a table view with:
  * - Option title and identifier
  * - Associated Question
- * - Weight
+ * - Weight.
  */
 class OptionListBuilder extends EntityListBuilder {
 
@@ -41,6 +41,7 @@ class OptionListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /** @var \Drupal\voting_core\Entity\Option $entity */
+    /** @var \Drupal\voting_core\Entity\Question|null $question */
     $question = $entity->get('question')->entity;
     $questionTitle = $question ? $question->label() : $this->t('(Unknown)');
 
