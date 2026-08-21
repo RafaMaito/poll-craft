@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Drupal\voting_core\Service;
 
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\file\FileInterface;
 use Psr\Log\LoggerInterface;
@@ -24,6 +26,8 @@ final class QuestionManager {
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly LoggerInterface $logger,
     private readonly CacheBackendInterface $cacheBackend,
+    private readonly Connection $database,
+    private readonly ConfigFactoryInterface $configFactory,
   ) {
   }
 
@@ -53,7 +57,7 @@ final class QuestionManager {
     $cacheKey = 'voting_core:active_questions_normalized';
     $cached = $this->cacheBackend->get($cacheKey);
 
-    if ($cached !== false) {
+    if ($cached !== FALSE) {
       $this->logger->debug('Active questions cache HIT');
       return $cached->data;
     }
@@ -64,14 +68,14 @@ final class QuestionManager {
     $questionStorage = $this->entityTypeManager->getStorage('question');
     $questions = $questionStorage->loadByProperties(
       [
-        'status' => true,
+        'status' => TRUE,
       ]
     );
 
     $result = [];
     foreach ($questions as $question) {
       /** @var \Drupal\voting_core\Entity\Question $question */
-      $result[] = $this->normalizeQuestion($question, false);
+      $result[] = $this->normalizeQuestion($question, FALSE);
     }
 
     // Cache the result for 1 hour with appropriate tags.
@@ -99,7 +103,7 @@ final class QuestionManager {
     $cacheKey = "voting_core:question:{$identifier}";
     $cached = $this->cacheBackend->get($cacheKey);
 
-    if ($cached !== false) {
+    if ($cached !== FALSE) {
       return $cached->data;
     }
 
@@ -109,14 +113,15 @@ final class QuestionManager {
         'identifier' => $identifier,
       ]
     );
-    $question = reset($questions) ?: null;
+    $question = reset($questions) ?: NULL;
+    /** @var \Drupal\voting_core\Entity\Question|null $question */
 
     // Return NULL if question doesn't exist or is inactive.
-    if ($question === null || (bool) $question->get('status')->value === false) {
-      return null;
+    if ($question === NULL || (bool) $question->get('status')->value === FALSE) {
+      return NULL;
     }
 
-    $result = $this->normalizeQuestion($question, true);
+    $result = $this->normalizeQuestion($question, TRUE);
 
     // Cache the result for 30 minutes with appropriate tags.
     $this->cacheBackend->set(
@@ -149,10 +154,11 @@ final class QuestionManager {
       return $cached->data;
     }
 
-    // Load question
+    // Load question.
     $questionStorage = $this->entityTypeManager->getStorage('question');
     $questions = $questionStorage->loadByProperties(['identifier' => $identifier]);
     $question = reset($questions) ?: NULL;
+    /** @var \Drupal\voting_core\Entity\Question|null $question */
 
     if ($question === NULL || (bool) $question->get('status')->value === FALSE) {
       return NULL;
@@ -166,12 +172,19 @@ final class QuestionManager {
       return NULL;
     }
 
-    $voteStorage = $this->entityTypeManager->getStorage('vote');
     $optionStorage = $this->entityTypeManager->getStorage('option');
 
     $options = $optionStorage->loadByProperties([
       'question' => $question->id(),
     ]);
+
+    // Single aggregated query (GROUP BY option) instead of N COUNT queries.
+    $countQuery = $this->database->select('voting_vote', 'v');
+    $countQuery->fields('v', ['option']);
+    $countQuery->addExpression('COUNT(*)', 'vote_count');
+    $countQuery->condition('v.question', $question->id());
+    $countQuery->groupBy('v.option');
+    $counts = $countQuery->execute()->fetchAllKeyed();
 
     $results = [];
     $totalVotes = 0;
@@ -179,12 +192,7 @@ final class QuestionManager {
     foreach ($options as $option) {
       /** @var \Drupal\voting_core\Entity\Option $option */
       $optionId = $option->id();
-      $count = $voteStorage->getQuery()
-        ->condition('question', $question->id())
-        ->condition('option', $optionId)
-        ->accessCheck(FALSE)
-        ->count()
-        ->execute();
+      $count = (int) ($counts[$optionId] ?? 0);
 
       $totalVotes += $count;
 
@@ -192,7 +200,7 @@ final class QuestionManager {
         'option_id' => $optionId,
         'option_identifier' => $option->get('identifier')->value,
         'option_title' => $option->get('title')->value,
-        'vote_count' => (int) $count,
+        'vote_count' => $count,
       ];
     }
 
@@ -203,16 +211,19 @@ final class QuestionManager {
     }
 
     $data = [
+      'question_id' => (int) $question->id(),
       'question' => $this->normalizeQuestion($question, FALSE),
       'results' => $results,
       'total_votes' => $totalVotes,
     ];
 
-    // Cache the results for 5 minutes with appropriate tags.
+    $ttl = (int) ($this->configFactory->get('voting_core.settings')->get('cache_results_ttl') ?? 300);
+
+    // Cache the results with appropriate tags.
     $this->cacheBackend->set(
       $cacheKey,
       $data,
-      time() + 300,
+      time() + max(0, $ttl),
       [
         'question:' . $question->id(),
         'question_results',
@@ -238,7 +249,7 @@ final class QuestionManager {
    * @return array<string, mixed>
    *   Normalized question data.
    */
-  private function normalizeQuestion(Question $question, bool $includeOptions = true): array {
+  private function normalizeQuestion(Question $question, bool $includeOptions = TRUE): array {
     $data = [
       'identifier' => $question->get('identifier')->value,
       'title' => $question->get('title')->value,
@@ -272,7 +283,7 @@ final class QuestionManager {
       ->condition('question', $questionId)
       ->sort('weight', 'ASC')
       // Admin operation, not user-facing.
-      ->accessCheck(false);
+      ->accessCheck(FALSE);
 
     $optionIds = $query->execute();
     $options = $optionStorage->loadMultiple($optionIds);
@@ -293,7 +304,7 @@ final class QuestionManager {
         /** @var \Drupal\file\FileInterface $file */
         $file = $option->get('image')->entity;
         if ($file instanceof FileInterface) {
-          $optionData['image_url'] = $file->createFileUrl(false);
+          $optionData['image_url'] = $file->createFileUrl(FALSE);
         }
       }
 
