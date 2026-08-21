@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\voting_core\Entity\Question;
 
 /**
  * @file
@@ -40,7 +39,7 @@ function voting_core_theme(array $existing, $type, $theme, $path): array {
     ],
     'question_voting_form' => [
       'variables' => [
-        'vote' => [],
+        'question' => [],
         'form' => [],
       ],
       'template' => 'question-voting-form',
@@ -53,7 +52,7 @@ function voting_core_theme(array $existing, $type, $theme, $path): array {
     ],
     'question_already_voted' => [
       'variables' => [
-        'vote' => [],
+        'question' => [],
       ],
       'template' => 'question-already-voted',
     ],
@@ -110,13 +109,16 @@ function voting_core_preprocess_page(array &$variables): void {
  *   The entity that was updated.
  */
 function voting_core_entity_update(EntityInterface $entity): void {
-  if ($entity->getEntityTypeId() === 'vote') {
-    Cache::invalidateTags([
-      'question_list',
-      'question:' . $entity->id(),
-      'question_results',
-    ]);
+  if (!$entity instanceof \Drupal\voting_core\Entity\Vote) {
+    return;
   }
+
+  $questionId = $entity->get('question')->target_id;
+  Cache::invalidateTags([
+    'question_list',
+    'question:' . $questionId,
+    'question_results',
+  ]);
 }
 
 /**
@@ -128,85 +130,31 @@ function voting_core_entity_update(EntityInterface $entity): void {
  *   The entity that was deleted.
  */
 function voting_core_entity_delete(EntityInterface $entity): void {
-  if ($entity->getEntityTypeId() === 'vote') {
-    Cache::invalidateTags([
-      'question_list',
-      'question:' . $entity->id(),
-      'question_results',
-    ]);
+  if (!$entity instanceof \Drupal\voting_core\Entity\Vote) {
+    return;
   }
+
+  $questionId = $entity->get('question')->target_id;
+  Cache::invalidateTags([
+    'question_list',
+    'question:' . $questionId,
+    'question_results',
+  ]);
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_entity_predelete().
  *
- * Redirects admin users to voting dashboard after login.
+ * Deletes the options of a question before the question is removed.
  */
-function voting_core_form_user_login_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  // Adiciona nosso submit handler ao array de submit do form.
-  $form['#submit'][] = 'voting_core_user_login_redirect_submit';
-}
-
-
-/**
- * Custom submit handler for the login form.
- *
- * - Admins -> /admin/voting/dashboard
- * - Authenticated users -> /voting/questions
- * - Anonymous users -> default flow
- */
-function voting_core_user_login_redirect_submit(array &$form, FormStateInterface $form_state): void {
-  // The original Drupal code to get the user ID after login.
-  // @see \Drupal\user\Form\UserLoginForm::submitForm()
-  $uid = $form_state->get('uid');
-  if (empty($uid)) {
+function voting_core_entity_predelete(EntityInterface $entity): void {
+  if (!$entity instanceof Question) {
     return;
   }
 
-  /** @var \Drupal\user\UserInterface|null $account */
-  $account = \Drupal::entityTypeManager()
-    ->getStorage('user')
-    ->load($uid);
-
-  if (!$account) {
-    return;
+  $optionStorage = \Drupal::entityTypeManager()->getStorage('option');
+  $options = $optionStorage->loadByProperties(['question' => $entity->id()]);
+  if (!empty($options)) {
+    $optionStorage->delete($options);
   }
-
-  // Do not override an explicit destination (?destination=...).
-  $request = \Drupal::service('request_stack')->getCurrentRequest();
-  if ($request->query->has('destination') || $request->request->has('destination')) {
-    return;
-  }
-
-  // Check a specific permission from your module:
-    $is_admin = $account->hasPermission('administer_voting_settings')
-    || $account->hasPermission('administer_voting_questions')
-    || $account->hasPermission('administer_voting_votes');
-
-  // Ensure that user 1 always goes there.
-  if ($account->id() === 1) {
-    $is_admin = TRUE;
-  }
-
-    if ($is_admin) {
-    $url = Url::fromRoute('voting_core.admin_dashboard');
-    $form_state->setRedirectUrl($url);
-    return;
-  }
-
-    if (!$account->isAnonymous()) {
-    $url = Url::fromRoute('voting_core.question_list');
-    $form_state->setRedirectUrl($url);
-    return;
-  }
-
-  if (!$is_admin) {
-    // Regular user: let Drupal's default flow continue.
-    return;
-  }
-
-  // Redirects to the dashboard route.
-  // Ensure that this route exists in your routing.yml as `voting_core.admin_dashboard`.
-  $url = Url::fromRoute('voting_core.admin_dashboard');
-  $form_state->setRedirectUrl($url);
 }

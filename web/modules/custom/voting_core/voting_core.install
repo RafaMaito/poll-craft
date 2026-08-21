@@ -163,116 +163,92 @@ function _voting_core_ensure_indexes(): void {
   $connection = Database::getConnection();
   $schema = $connection->schema();
 
-  // Vote table (voting_vote).
-  if ($schema->tableExists('voting_vote')) {
-    // Question + user_id index.
-    if (
-      $schema->fieldExists('voting_vote', 'question') &&
-      $schema->fieldExists('voting_vote', 'user_id')
-    ) {
-      if (!$schema->indexExists('voting_vote', 'question_user')) {
-        $schema->addIndex('voting_vote', 'question_user', ['question', 'user_id'], []);
+  $indexes = [
+    'voting_vote' => [
+      'question_user' => [['question', 'user_id'], FALSE],
+      'question_user_unique' => [['question', 'user_id'], TRUE],
+      'question_option' => [['question', 'option'], FALSE],
+      'user_id' => [['user_id'], FALSE],
+      'created' => [['created'], FALSE],
+    ],
+    'voting_question' => [
+      'identifier' => [['identifier'], TRUE],
+      'status' => [['status'], FALSE],
+      'status_created' => [['status', 'created'], FALSE],
+    ],
+    'voting_option' => [
+      'question_identifier' => [['question', 'identifier'], FALSE],
+      'question_identifier_unique' => [['question', 'identifier'], TRUE],
+      'question_weight' => [['question', 'weight'], FALSE],
+    ],
+  ];
+
+  foreach ($indexes as $table => $tableIndexes) {
+    if (!$schema->tableExists($table)) {
+      continue;
+    }
+
+    foreach ($tableIndexes as $name => [$columns, $unique]) {
+      if ($schema->indexExists($table, $name)) {
+        continue;
       }
 
-      if (!$schema->indexExists('voting_vote', 'question_user_unique')) {
-        try {
-          $schema->addUniqueKey('voting_vote', 'question_user_unique', ['question', 'user_id'], []);
-        } catch (\Exception $e) {
-          \Drupal::logger('voting_core')->warning(
-            'Could not add unique constraint question_user_unique on voting_vote: @message',
-            ['@message' => $e->getMessage()]
-          );
-        }
-      }
-    }
-
-    // Question + option index.
-    if (
-      $schema->fieldExists('voting_vote', 'question') &&
-      $schema->fieldExists('voting_vote', 'option')
-    ) {
-      if (!$schema->indexExists('voting_vote', 'question_option')) {
-        $schema->addIndex('voting_vote', 'question_option', ['question', 'option'], []);
-      }
-    }
-
-    // user_id index.
-    if ($schema->fieldExists('voting_vote', 'user_id') && !$schema->indexExists('voting_vote', 'user_id')) {
-      $schema->addIndex('voting_vote', 'user_id', ['user_id'], []);
-    }
-
-    // created index.
-    if ($schema->fieldExists('voting_vote', 'created') && !$schema->indexExists('voting_vote', 'created')) {
-      $schema->addIndex('voting_vote', 'created', ['created'], []);
-    }
-  }
-
-  // Question table (voting_question).
-  if ($schema->tableExists('voting_question')) {
-    if (
-      $schema->fieldExists('voting_question', 'identifier') &&
-      !$schema->indexExists('voting_question', 'identifier')
-    ) {
       try {
-        $schema->addUniqueKey('voting_question', 'identifier', ['identifier']);
+        $columnSql = implode(', ', $columns);
+        $keyword = $unique ? 'UNIQUE' : '';
+        $connection->query("CREATE $keyword INDEX {$name} ON {$table} ($columnSql)");
       } catch (\Exception $e) {
         \Drupal::logger('voting_core')->warning(
-          'Could not add unique key identifier on voting_question: @message',
-          ['@message' => $e->getMessage()]
+          'Could not add index @name on @table: @message',
+          ['@name' => $name, '@table' => $table, '@message' => $e->getMessage()]
         );
       }
     }
+  }
+}
 
-    if (
-      $schema->fieldExists('voting_question', 'status') &&
-      !$schema->indexExists('voting_question', 'status')
-    ) {
-      $schema->addIndex('voting_question', 'status', ['status'], []);
+/**
+ * Applies uniqueness constraints and performance indexes to existing installs.
+ *
+ * Databases imported via `drush sql-cli` (e.g. database/pollcraft.sql) do not
+ * run hook_install(), so the constraints defined in
+ * _voting_core_ensure_indexes() must be applied here with `drush updb`.
+ */
+function voting_core_update_11001(): void {
+  /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $question_storage = $entity_type_manager->getStorage('question');
+
+  // Deduplica identifiers de pergunta antes de aplicar a constraint única.
+  $ids = $question_storage->getQuery()->accessCheck(FALSE)->execute();
+  $seen = [];
+
+  foreach ($question_storage->loadMultiple($ids) as $question) {
+    /** @var \Drupal\voting_core\Entity\Question $question */
+    $identifier = $question->get('identifier')->value;
+    if ($identifier === NULL || $identifier === '') {
+      continue;
     }
 
-    if (
-      $schema->fieldExists('voting_question', 'status') &&
-      $schema->fieldExists('voting_question', 'created') &&
-      !$schema->indexExists('voting_question', 'status_created')
-    ) {
-      $schema->addIndex('voting_question', 'status_created', ['status', 'created'], []);
+    if (isset($seen[$identifier])) {
+      $new_identifier = sprintf('%s_dup_%d', $identifier, $question->id());
+      $question->set('identifier', $new_identifier);
+      $question->save();
+
+      \Drupal::logger('voting_core')->warning(
+        'Renamed duplicate question identifier @old to @new.',
+        ['@old' => $identifier, '@new' => $new_identifier]
+      );
+    } else {
+      $seen[$identifier] = TRUE;
     }
   }
 
-  // Option table (voting_option).
-  if ($schema->tableExists('voting_option')) {
-    if (
-      $schema->fieldExists('voting_option', 'question') &&
-      $schema->fieldExists('voting_option', 'identifier')
-    ) {
-      if (!$schema->indexExists('voting_option', 'question_identifier')) {
-        $schema->addIndex('voting_option', 'question_identifier', ['question', 'identifier'], []);
-      }
+  _voting_core_ensure_indexes();
 
-      if (!$schema->indexExists('voting_option', 'question_identifier_unique')) {
-        try {
-          $schema->addUniqueKey(
-            'voting_option',
-            'question_identifier_unique',
-            ['question', 'identifier']
-          );
-        } catch (\Exception $e) {
-          \Drupal::logger('voting_core')->warning(
-            'Could not add unique constraint question_identifier_unique on voting_option: @message',
-            ['@message' => $e->getMessage()]
-          );
-        }
-      }
-    }
-
-    if (
-      $schema->fieldExists('voting_option', 'question') &&
-      $schema->fieldExists('voting_option', 'weight') &&
-      !$schema->indexExists('voting_option', 'question_weight')
-    ) {
-      $schema->addIndex('voting_option', 'question_weight', ['question', 'weight'], []);
-    }
-  }
+  \Drupal::messenger()->addStatus(
+    'Voting Core: identifiers deduplicated and indexes/constraints applied.'
+  );
 }
 
 /**

@@ -47,10 +47,9 @@ final class Option extends ContentEntityBase {
 
   /**
    * Base field definitions for the Option entity.
-   * 
-   * @return array<string, \Drupal\Core\Field\BaseFieldDefinition>
-   *   An array of base field definitions.
    *
+   * @return array<string, \Drupal\Core\Field\FieldDefinitionInterface>
+   *   An array of base field definitions.
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
     $fields = parent::baseFieldDefinitions($entity_type);
@@ -142,7 +141,7 @@ final class Option extends ContentEntityBase {
 
     return $fields;
   }
-  
+
   /**
    * {@inheritdoc}
    *
@@ -159,8 +158,7 @@ final class Option extends ContentEntityBase {
       if ($identifier) {
         return sprintf('Option: %s', $identifier);
       }
-    }
-    catch (\Throwable $e) {
+    } catch (\Throwable $e) {
       // Modern logging instead of watchdog_exception().
       \Drupal::logger('voting_core')->error(
         'Error generating label for Option entity @id: @message',

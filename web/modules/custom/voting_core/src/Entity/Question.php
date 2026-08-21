@@ -49,8 +49,8 @@ final class Question extends ContentEntityBase {
 
   /**
    * Base field definitions for the Question entity.
-   * 
-   * @return array<string, \Drupal\Core\Field\BaseFieldDefinition>
+   *
+   * @return array<string, \Drupal\Core\Field\FieldDefinitionInterface>
    *   An array of base field definitions.
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
