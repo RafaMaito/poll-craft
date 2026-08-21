@@ -5,7 +5,7 @@ config:
   webroot: web
   php: '8.3'
   via: nginx
-  xdebug: true
+  xdebug: false
   config:
     php: .lando/php.ini
 
@@ -14,9 +14,10 @@ services:
     overrides:
       environment:
         PHP_IDE_CONFIG: "serverName=appserver"
-        DRUSH_OPTIONS_URI: "https://poll-craft.lndo.site/"
+        DRUSH_OPTIONS_URI: "https://poll-craft.lndo.site:444/"
         REDIS_HOST: redis
         APP_ENV: "local"
+        SIMPLETEST_DB: "mysql://drupal:drupal@database/drupal"
         
   database:
     type: mariadb:10.11
@@ -34,6 +35,11 @@ services:
     type: redis:7
 
 tooling:
+  test:
+    service: appserver
+    cmd: ./vendor/bin/phpunit --testdox
+    description: Run PHPUnit tests
+
   drush:
     service: appserver
     cmd: drush
