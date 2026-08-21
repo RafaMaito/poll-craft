@@ -1,0 +1,5 @@
+front:
+  version: VERSION
+  css:
+    theme:
+      css/voting_core.front.css: {}

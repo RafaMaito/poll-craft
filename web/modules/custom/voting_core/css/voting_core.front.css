@@ -1,0 +1,130 @@
+/* Voting Core front-end styles. */
+
+/* Question list */
+.voting-system-status {
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.voting-system-status.voting-disabled {
+  background-color: #fff3cd;
+  border: 2px solid #ffc107;
+}
+
+.status-icon {
+  font-size: 40px;
+}
+
+.status-message strong {
+  color: #856404;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.question-card.disabled {
+  opacity: 0.6;
+}
+
+.button--disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Results */
+.results {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.results__header {
+  margin-bottom: 2rem;
+}
+
+.results__total {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.results__item {
+  margin-bottom: 1.5rem;
+}
+
+.results__item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.results__option-title {
+  font-weight: bold;
+}
+
+.results__votes {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.results__bar {
+  height: 30px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.results__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50 0%, #45a049 100%);
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.results__percentage {
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.results__actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Already voted */
+.question-already-voted {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.question-already-voted__message {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.question-already-voted__message p:first-child {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #155724;
+  margin-bottom: 0.5rem;
+}
+
+.question-already-voted__message p:last-child {
+  color: #155724;
+  margin: 0;
+}
+
+.question-already-voted__actions {
+  margin-top: 2rem;
+}
