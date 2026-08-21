@@ -1,387 +1,360 @@
+<div align="center">
 
-# Sistema de Votação em Drupal!
+# 🗳️ Poll Craft
 
-## Sistema de perguntas desenvolvido em **Drupal 11**
+**Sistema de votação construído sobre Drupal 11** - entidades próprias, API REST, fila assíncrona e cache em Redis.
 
-Práticas de desenvolvimento usadas:
-Drupal:
-- Entidades customizadas.
-- Serviços desacoplados para lógica central.
-- Controladores próprios para API e interface pública.
-- Formulários personalizados para CRUD administrativo.
-- Templates Twig simples.
-Outras tecnologias:
-- Lando
-- Redis
-- Postman
----
+![Drupal](https://img.shields.io/badge/Drupal-11-009CDE?logo=drupal&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-10.11-003545?logo=mariadb&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)
+![License](https://img.shields.io/badge/License-GPL--2.0--or--later-blue)
 
-## Estrutura do Projeto
-
-O projeto contém dois modulos principais:
-
-| Módulo | Responsabilidade | Arquivos Principais |
-|--------|------------------|---------------------|
-| **voting_core** | - Entities (Question, Option, Vote)<br>- Business Logic (VoteManager)<br>- Transactions & Validações<br>- Queue Processing<br>- Admin UI | - VoteManager.php<br>- QuestionManager.php<br>- ExternalSyncWorker.php<br>- AdminDashboardController.php |
-| **voting_api** | - REST Endpoints<br>- JSON Responses<br>- HTTP Status Codes<br>- Rate Limiting (subscriber) | - VoteApiController.php<br>- QuestionApiController.php<br>- ResultsApiController.php |
+</div>
 
 ---
 
-# API Externa
+## Sumário
 
-O módulo **voting_api** fornece acesso a:
+- [Visão geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Arquitetura](#arquitetura)
+- [Requisitos](#requisitos)
+- [Instalação e execução](#instalação-e-execução)
+- [API REST](#api-rest)
+- [Configuração](#configuração)
+- [Testes e qualidade de código](#testes-e-qualidade-de-código)
+- [Benchmark](#benchmark)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Licença](#licença)
 
-| Método | Endpoint | Função |
-|--------|----------|---------|
-| GET | `/api/voting/questions` | Lista perguntas ativas |
-| GET | `/api/voting/questions/{identifier}` | Retorna pergunta completa |
-| POST | `/api/voting/questions/{identifier}/vote` | Registra voto |
-| GET | `/api/voting/questions/{identifier}/results` | Retorna resultados |
+## Visão geral
 
-### Características:
-- Implementada manualmente
-- Controllers dedicados
-- Postman
-- JSON com:
-  - question
-  - options
-  - vote count
-  - status flags
+O **Poll Craft** é um sistema de votação implementado como módulos customizados do Drupal 11. Em vez de reutilizar o tipo de conteúdo `node`, o projeto define **entidades próprias** (`question`, `option` e `vote`), separando claramente o domínio de negócio da camada de apresentação.
 
-### Endpoints
+A lógica central fica em **serviços desacoplados** (`VoteManager` e `QuestionManager`), seguindo os princípios **SOLID** e o padrão de injeção de dependência do Drupal (`create()` + `ContainerInterface`). A exposição ao mundo externo é feita por uma **API REST** com respostas em JSON e códigos HTTP semânticos.
 
-#### Listar questions
+## Funcionalidades
 
-*Endpoint:*
+- Entidades customizadas: **Question**, **Option** e **Vote**.
+- API REST com JSON e códigos HTTP semânticos (400, 403, 404, 409, 429).
+- Rate limiting da API (via Flood API), sem gravar IP em logs.
+- Registro de voto **transacional (ACID)** e protegido contra votos duplicados (inclusive em corrida).
+- Resultados agregados em **consulta única** (sem N+1).
+- Processamento assíncrono com **Queue API** (`ExternalSyncWorker`).
+- Invalidação de cache por tags na criação/edição/exclusão de entidades.
+- UI administrativa: dashboard, CRUD e configurações.
+- Cache em Redis com fallback para o cache padrão.
 
-   GET /api/voting/questions
+## Arquitetura
 
-*Exemplo de Request:*
+O projeto é composto por dois módulos:
 
-    /api/voting/questions
+| Módulo                                          | Responsabilidade        | Componentes principais                                                                                              |
+| ----------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [`voting_core`](web/modules/custom/voting_core) | Domínio de negócio e UI | Entidades (`Question`, `Option`, `Vote`), `VoteManager`, `QuestionManager`, formulários, dashboard e worker de fila |
+| [`voting_api`](web/modules/custom/voting_api)   | API REST                | `VoteApiController`, `QuestionApiController`, `ResultsApiController`, `ApiSecuritySubscriber`                       |
 
-*Exemplo Response:*
+### Regras de negócio
 
+O registro de voto (`VoteManager`) valida, em ordem:
+
+1. Votação habilitada globalmente.
+2. Voto de usuário anônimo permitido (quando aplicável).
+3. Limite de votos por usuário/IP (rate limit).
+4. Pergunta existente e ativa.
+5. Período de votação dentro do prazo (`voting_end_date`).
+6. Opção pertencente à pergunta.
+7. Voto duplicado com tratamento de violação de unicidade para evitar corrida.
+
+Cada regra violada lança uma `VoteException` tipada, que a API converte no código HTTP adequado.
+
+### Camadas
+
+- **Entities** - `Question`, `Option`, `Vote` (`ContentEntityType`).
+- **Services** - `VoteManager`, `QuestionManager`.
+- **Controllers** - interface web (`/voting/...`) e API (`/api/voting/...`).
+- **EventSubscribers** - sincronização externa, invalidação de cache e segurança da API.
+- **QueueWorker** - `ExternalSyncWorker` para processamento assíncrono.
+
+## Requisitos
+
+| Ferramenta | Versão |
+| ---------- | ------ |
+| Drupal     | 11     |
+| PHP        | 8.3    |
+| MariaDB    | 10.11  |
+| Redis      | 7      |
+| Lando      | 3.x    |
+| Composer   | 2.x    |
+| Drush      | 13.x   |
+
+> O ambiente é provisionado pelo [Lando](https://lando.dev/). Consulte o [`.lando.yml`](.lando.yml).
+
+## Instalação e execução
+
+### 1. Iniciar o ambiente
+
+```bash
+lando start
 ```
+
+### 2. Instalar as dependências
+
+```bash
+lando composer install
+```
+
+### 3. Importar o banco de dados
+
+```bash
+lando drush sql:cli < database/pollcraft.sql
+```
+
+### 4. Aplicar as atualizações de schema
+
+```bash
+lando drush updatedb -y
+```
+
+### 5. Habilitar os módulos
+
+```bash
+lando drush pm:en redis -y
+lando drush pm:en voting_core -y
+lando drush pm:en voting_api -y
+```
+
+### 6. Acessar
+
+A URL principal é exibida ao final do `lando start`. Para conferir todas as URLs (site, phpMyAdmin etc.), execute:
+
+```bash
+lando info
+```
+
+| Serviço      | URL                                 |
+| ------------ | ----------------------------------- |
+| Site (HTTPS) | `https://poll-craft.lndo.site:444/` |
+| Site (HTTP)  | `http://poll-craft.lndo.site:8000/` |
+| phpMyAdmin   | exibida em `lando info`             |
+
+> As portas `8000`/`444` são usadas porque a porta `80` costuma estar ocupada. Elas podem ser ajustadas em `~/.lando/config.yml` (`proxyHttpPort` / `proxyHttpsPort`).
+
+### Credenciais
+
+| Usuário | Senha   |
+| ------- | ------- |
+| `admin` | `admin` |
+
+### Banco de dados
+
+| Campo    | Valor      |
+| -------- | ---------- |
+| Host     | `database` |
+| Porta    | `3306`     |
+| Database | `drupal`   |
+| Usuário  | `drupal`   |
+| Senha    | `drupal`   |
+
+## API REST
+
+O módulo `voting_api` expõe os seguintes endpoints:
+
+| Método | Endpoint                                     | Descrição                             |
+| ------ | -------------------------------------------- | ------------------------------------- |
+| `GET`  | `/api/voting/questions`                      | Lista as perguntas ativas             |
+| `GET`  | `/api/voting/questions/{identifier}`         | Detalhes de uma pergunta (com opções) |
+| `POST` | `/api/voting/vote`                           | Registra um voto                      |
+| `GET`  | `/api/voting/questions/{identifier}/results` | Resultados agregados                  |
+
+> Coleção Postman disponível em [`postman_colection/voting_api.postman_collection.json`](postman_colection/voting_api.postman_collection.json).
+
+### Listar perguntas
+
+`GET /api/voting/questions`
+
+```json
 {
-  "status": "success",
-  "time": 1753462809,
-  "data": {
-      "page": 1,
-      "per_page": 10,
-      "total": 2,
-      "total_pages": 1,
-      "data": [
-          {
-              "identifier": "favorite-color",
-              "title": "What is your favorite color?"
-          },
-          {
-              "identifier": "best-animal",
-              "title": "Which animal do you prefer?"
-          }
-      ]
-  }
-}
-
-```
-#### Detalhes question
-
-*Endpoint:*
-
-   GET /api/voting/questions/{identifier}
-
-*Exemplo de Request:*
-
-    /api/voting/questions/favorite-color
-
-*Exemplo de Request:*
-
-/api/voting/questions/favorite-color
-
-Exemplo Response:
-
-```
-{
-  "status": "success",
-  "time": 1753462809,
-  "data": {
+  "questions": [
+    {
       "identifier": "favorite-color",
       "title": "What is your favorite color?",
       "description": "Choose one option",
-      "options": [
-          {
-              "identifier": "red-color",
-              "title": "Red",
-              "description": "Warm tone"
-          },
-          {
-              "identifier": "blue-color",
-              "title": "Blue",
-              "description": "Cold tone"
-          }
-      ]
+      "show_results": true,
+      "created": 1753462809,
+      "changed": 1753462809
+    }
+  ]
+}
+```
+
+### Detalhes de uma pergunta
+
+`GET /api/voting/questions/favorite-color`
+
+```json
+{
+  "question": {
+    "identifier": "favorite-color",
+    "title": "What is your favorite color?",
+    "description": "Choose one option",
+    "show_results": true,
+    "options": [
+      {
+        "identifier": "red-color",
+        "title": "Red",
+        "description": "Warm tone",
+        "weight": 0
+      },
+      {
+        "identifier": "blue-color",
+        "title": "Blue",
+        "description": "Cold tone",
+        "weight": 1
+      }
+    ]
   }
 }
 ```
 
-#### Registrar voto
-*Endpoint:*
+### Registrar voto
 
-   POST /api/voting/vote
+`POST /api/voting/vote`
 
-*Exemplo de Request:*
-
-    /api/voting/vote
-
-*Body:*
-```
+```json
 {
   "question_identifier": "favorite-color",
   "option_identifier": "red-color"
 }
 ```
 
-*Exemplo de Response:*
+Resposta de sucesso:
 
-```
+```json
 {
-  "status": "success",
-  "time": 1753462809,
-  "message": "Vote registered successfully."
-}
-```
-*Exemplo de Error Response:*
-
-```
-{
-  "status": "error",
-  "time": 1753462809,
-  "message": "Invalid JSON payload."
+  "message": "Vote registered successfully.",
+  "question_identifier": "favorite-color",
+  "option_identifier": "red-color"
 }
 ```
 
-#### Detalhes resultado de votos
+Resposta de erro:
 
-*Endpoint:*
-
-   GET /api/voting/questions/{identifier}/results
-
-*Exemplo de Request:*
-
-    /api/voting/questions/favorite-color/results
-
-*Exemplo de Reesponse:*
-
-```
+```json
 {
-  "status": "success",
-  "time": 1753462809,
-  "data": {
+  "error": "Invalid JSON payload."
+}
+```
+
+### Resultados de uma pergunta
+
+`GET /api/voting/questions/favorite-color/results`
+
+```json
+{
+  "question": {
     "identifier": "favorite-color",
     "title": "What is your favorite color?",
-    "results": [
-      {
-        "option": "red-color",
-        "title": "Red",
-        "votes": 10,
-        "percentage": 50
-      },
-      {
-        "option": "blue-color",
-        "title": "Blue",
-        "votes": 5,
-        "percentage": 25
-      },
-      {
-        "option": "yellow-color",
-        "title": "Yellow",
-        "votes": 5,
-        "percentage": 25
-      }
-    ]
-  }
-}
-```
-*Exemplo de Error Reesponse:*
-
-```
-{
-  "status": "error",
-  "time": 1753462809,
-  "message": "Results are not available for this question."
-}
-```
-```
-{
-  "status": "error",
-  "time": 1753462809,
-  "message": "Question not found or inactive."
+    "description": "Choose one option",
+    "show_results": true
+  },
+  "results": [
+    {
+      "option_id": 1,
+      "option_identifier": "red-color",
+      "option_title": "Red",
+      "vote_count": 10,
+      "percentage": 50
+    }
+  ],
+  "total_votes": 20
 }
 ```
 
----
+## Configuração
+
+- **Dashboard administrativo**: `/admin/voting/dashboard`
+- **Configurações do sistema**: `/admin/config/system/voting`
+
+Permissões disponíveis:
+
+| Permissão                     | Descrição                                  |
+| ----------------------------- | ------------------------------------------ |
+| `administer_voting_questions` | Criar, editar e excluir perguntas e opções |
+| `administer_voting_votes`     | Visualizar, analisar e excluir votos       |
+| `administer_voting_settings`  | Configurar o sistema globalmente           |
+| `view_voting_results`         | Ver resultados agregados                   |
+| `cast_vote`                   | Votar em perguntas ativas                  |
+| `access_voting_api`           | Acessar os endpoints da API                |
+
+## Testes e qualidade de código
+
+O projeto usa **PHPUnit**, **PHPStan** (nível 6) e **PHP_CodeSniffer** (padrões `Drupal` + `DrupalPractice`).
+
+### Comandos (via Lando)
+
+```bash
+lando test      # PHPUnit com --testdox
+lando phpstan   # Análise estática
+lando phpcs     # Verificação de padrões de código
+lando phpcbf    # Correção automática de padrões
+```
+
+### Comandos (via Composer)
+
+```bash
+composer test
+composer stan
+composer cs
+composer cbf
+composer qa    # cs + stan + test
+```
+
+### Suítes de teste
+
+| Suíte      | Comando                                       |
+| ---------- | --------------------------------------------- |
+| Unit       | `lando test -- --testsuite voting-unit`       |
+| Kernel     | `lando test -- --testsuite voting-kernel`     |
+| Functional | `lando test -- --testsuite voting-functional` |
+
+> Os testes Kernel e Functional exigem um banco de dados de teste (`SIMPLETEST_DB`), já configurado no [`.lando.yml`](.lando.yml).
+
 ## Benchmark
 
-### Sem Redis
+Carga aplicada com `ab -n 10000 -c 50 <URL>/api/voting/questions`:
 
-Comando:
+| Cenário   | Requisições/s | Latência média | Erros |
+| --------- | ------------- | -------------- | ----- |
+| Sem Redis | 144,39        | 346 ms         | 0     |
+| Com Redis | 149,50        | 334 ms         | 0     |
 
-    ab -n 10000 -c 50 https://localhost:32771/api/voting/questions  
+## Estrutura do projeto
 
-Resultado:
+```text
+.
+├── .lando.yml                # Configuração do Lando
+├── composer.json             # Dependências e scripts
+├── phpstan.neon              # Configuração do PHPStan
+├── phpunit.xml.dist          # Configuração do PHPUnit
+├── config/sync/              # Configuração exportada do Drupal
+├── database/pollcraft.sql    # Dump do banco de dados
+├── postman_colection/        # Coleção Postman
+└── web/
+    └── modules/
+        └── custom/
+            ├── voting_core/
+            │   ├── src/Service/            # VoteManager, QuestionManager
+            │   ├── src/Entity/             # Question, Option, Vote
+            │   ├── src/Controller/         # Dashboard e interface web
+            │   ├── src/Form/               # Formulários
+            │   ├── src/EventSubscriber/    # Sync externo e cache
+            │   ├── src/Plugin/QueueWorker/ # Worker de fila
+            │   └── tests/                  # Testes Unit e Kernel
+            └── voting_api/
+                ├── src/Controller/         # Endpoints REST
+                ├── src/EventSubscriber/    # Segurança/rate limiting
+                └── tests/                  # Testes Functional
 ```
-This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/
-Benchmarking localhost (be patient)
-Completed 1000 requests
-Completed 2000 requests
-Completed 3000 requests
-Completed 4000 requests
-Completed 5000 requests
-Completed 6000 requests
-Completed 7000 requests
-Completed 8000 requests
-Completed 9000 requests
-Completed 10000 requests
-Finished 10000 requests
-Server Software:        nginx
-Server Hostname:        localhost
-Server Port:            32771
-SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES256-GCM-SHA384,2048,256
-Server Temp Key:        X25519 253 bits
-TLS Server Name:        localhost
-Document Path:          /api/voting/questions
-Document Length:        6871 bytes
-Concurrency Level:      50
-Time taken for tests:   69.256 seconds
-Complete requests:      10000
-Failed requests:        0
-Total transferred:      73580000 bytes
-HTML transferred:       68710000 bytes
-Requests per second:    144.39 [#/sec] (mean)
-Time per request:       346.278 [ms] (mean)
-Time per request:       6.926 [ms] (mean, across all concurrent requests)
-Transfer rate:          1037.54 [Kbytes/sec] received
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        2    5   2.5      5      39
-Processing:    24  340  24.4    336     532
-Waiting:       24  339  24.4    336     532
-Total:         42  345  24.1    342     537
-Percentage of the requests served within a certain time (ms)
-  50%    342
-  66%    347
-  75%    351
-  80%    355
-  90%    367
-  95%    379
-  98%    399
-  99%    426
- 100%    537 (longest request)
-```
-### Com Redis
-
-Comando:
-
-    ab -n 10000 -c 50 http://localhost:32783/api/voting/questions
-
-Resultado:
-```
-This is ApacheBench, Version 2.3 <$Revision: 1903618 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/
-
-Benchmarking localhost (be patient)
-Completed 1000 requests
-Completed 2000 requests
-Completed 3000 requests
-Completed 4000 requests
-Completed 5000 requests
-Completed 6000 requests
-Completed 7000 requests
-Completed 8000 requests
-Completed 9000 requests
-Completed 10000 requests
-Finished 10000 requests
-
-
-Server Software:        nginx
-Server Hostname:        localhost
-Server Port:            32786
-
-Document Path:          /api/voting/questions
-Document Length:        6871 bytes
-
-Concurrency Level:      50
-Time taken for tests:   66.890 seconds
-Complete requests:      10000
-Failed requests:        0
-Keep-Alive requests:    10000
-Total transferred:      73630000 bytes
-HTML transferred:       68710000 bytes
-Requests per second:    149.50 [#/sec] (mean)
-Time per request:       334.448 [ms] (mean)
-Time per request:       6.689 [ms] (mean, across all concurrent requests)
-Transfer rate:          1074.97 [Kbytes/sec] received
-
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        0    0   0.1      0       3
-Processing:    29  333  27.9    330     474
-Waiting:       29  333  27.9    330     474
-Total:         29  333  27.9    330     477
-
-Percentage of the requests served within a certain time (ms)
-  50%    330
-  66%    341
-  75%    347
-  80%    350
-  90%    365
-  95%    386
-  98%    404
-  99%    414
- 100%    477 (longest request)
-```
-
-## Start no ambiente
-
-### Commandos:
-
-#### Iniciar projeto
-```
- lando start
-```
-
-#### Instalar dependencias
-```
- lando composer install
-```
-
-#### Importar banco de dados 
-```
- lando drush sql-cli < ./database/pollcraft.sql
-```
-#### Habilitar módulos 
-```
- lando drush pm:en redis -y
- lando drush pm:en voting_core -y 
- lando drush pm:en voting_api -y
-```
-
-#### Logar como admin user
-
-**admin**
-```
-username: admin
-password: admin
-```
-#### Admin dashboard
-
-<img width="1915" height="931" alt="image" src="https://github.com/user-attachments/assets/53d922ae-b4dd-4dc4-b088-d37138e625e5" />
-
-#### Voting System Config
-
-<img width="956" height="893" alt="image" src="https://github.com/user-attachments/assets/4c0dc292-4337-4b86-b51e-fb2fcc8974aa" />
 
