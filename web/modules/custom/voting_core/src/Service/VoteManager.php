@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\voting_core\Service;
 
-use Drupal\Core\Access\AccessException;
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageException;
@@ -13,9 +13,11 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Drupal\voting_core\Event\VoteEvent;
+use Drupal\voting_core\Exception\VoteException;
 
 /**
  * Manages vote operations with ACID transactions and security.
+ *
  * GOAL:
  * - Ensure data integrity with transactions.
  * - Enforce business rules: one vote per user per question.
@@ -30,6 +32,7 @@ final class VoteManager {
     private readonly ConfigFactoryInterface $configFactory,
     private readonly Connection $database,
     private readonly EventDispatcherInterface $eventDispatcher,
+    private readonly TimeInterface $time,
   ) {
   }
 
@@ -41,73 +44,90 @@ final class VoteManager {
    * @param string $optionIdentifier
    *   The option identifier.
    *
-   * @throws \RuntimeException
+   * @throws \Drupal\voting_core\Exception\VoteException
    *   When business rules are violated.
-   * @throws \Drupal\Core\Access\AccessException
-   *   When security checks fail.
+   * @throws \RuntimeException
+   *   When an unexpected storage/system error occurs.
    */
   public function castVote(string $questionIdentifier, string $optionIdentifier): void {
 
-    // Global voting status check
+    // Global voting status check.
     $config = $this->configFactory->get('voting_core.settings');
     if ($config->get('voting_enabled') === FALSE) {
-      throw new \RuntimeException('Voting is currently disabled.');
+      throw new VoteException('Voting is currently disabled.', VoteException::DISABLED);
     }
 
-    // User authentication
+    // User authentication.
     $uid = (int) $this->currentUser->id();
     if ($uid === 0) {
       $allowAnonymous = (bool) $config->get('allow_anonymous_voting');
       if (!$allowAnonymous) {
-        throw new \RuntimeException('Anonymous users are not allowed to vote.');
+        throw new VoteException('Anonymous users are not allowed to vote.', VoteException::ANONYMOUS_NOT_ALLOWED);
       }
-      throw new \RuntimeException('Anonymous voting not yet implemented.');
+      throw new VoteException('Anonymous voting is not available.', VoteException::ANONYMOUS_NOT_ALLOWED);
     }
 
-    // Rate limiting
+    // Rate limiting.
     if (!$this->checkRateLimit($uid)) {
-      throw new \RuntimeException('Too many vote attempts. Please try again later.');
+      throw new VoteException('Too many vote attempts. Please try again later.', VoteException::RATE_LIMIT);
     }
 
-    // Load and validate question
+    // Load and validate question.
     $questionStorage = $this->entityTypeManager->getStorage('question');
     $questions = $questionStorage->loadByProperties([
       'identifier' => $questionIdentifier,
     ]);
     $question = reset($questions) ?: NULL;
+    /** @var \Drupal\voting_core\Entity\Question|null $question */
 
     if ($question === NULL) {
       $this->logger->warning('Vote attempt for non-existent question', [
         'identifier' => $questionIdentifier,
         'user_id' => $uid,
       ]);
-      throw new \RuntimeException('Question not found.');
+      throw new VoteException('Question not found.', VoteException::QUESTION_NOT_FOUND);
     }
 
-    // Validate question is active
+    // Validate question is active.
     if ((bool) $question->get('status')->value === FALSE) {
-      throw new \RuntimeException('This question is not currently active.');
+      throw new VoteException('This question is not currently active.', VoteException::QUESTION_INACTIVE);
     }
 
-    // Load and validate option
+    // Validate voting end date (if configured).
+    $endDate = $question->get('voting_end_date')->value;
+    if ($endDate) {
+      try {
+        $endTimestamp = (new \DateTimeImmutable($endDate, new \DateTimeZone('UTC')))
+          ->getTimestamp();
+      } catch (\Exception $e) {
+        $endTimestamp = NULL;
+      }
+
+      if ($endTimestamp !== NULL && $endTimestamp < $this->time->getRequestTime()) {
+        throw new VoteException('This question is no longer accepting votes.', VoteException::VOTING_CLOSED);
+      }
+    }
+
+    // Load and validate option.
     $optionStorage = $this->entityTypeManager->getStorage('option');
     $options = $optionStorage->loadByProperties([
       'identifier' => $optionIdentifier,
       'question' => $question->id(),
     ]);
     $option = reset($options) ?: NULL;
+    /** @var \Drupal\voting_core\Entity\Option|null $option */
 
     if ($option === NULL) {
-      // SECURITY: This might be an attempt to manipulate
+      // SECURITY: This might be an attempt to manipulate.
       $this->logger->warning('Vote attempt with invalid option', [
         'question_identifier' => $questionIdentifier,
         'option_identifier' => $optionIdentifier,
         'user_id' => $uid,
       ]);
-      throw new \RuntimeException('Invalid option for this question.');
+      throw new VoteException('Invalid option for this question.', VoteException::INVALID_OPTION);
     }
 
-    // Transaction for duplicate check + insert
+    // Transaction for duplicate check + insert.
     $transaction = $this->database->startTransaction();
 
     try {
@@ -122,22 +142,23 @@ final class VoteManager {
       $existingVoteIds = $query->execute();
 
       if (!empty($existingVoteIds)) {
-        throw new \RuntimeException('You have already voted for this question.');
+        throw new VoteException('You have already voted for this question.', VoteException::DUPLICATE);
       }
 
-      // Create vote entity
+      // Create vote entity.
       $vote = $voteStorage->create([
         'question' => $question->id(),
         'option' => $option->id(),
         'user_id' => $uid,
       ]);
+      /** @var \Drupal\voting_core\Entity\Vote $vote */
 
       $vote->save();
 
-      // Commit transaction
+      // Commit transaction.
       unset($transaction);
 
-      // Dispatch event for external sync
+      // Dispatch event for external sync.
       $event = new VoteEvent($vote, $question, $option);
       $this->eventDispatcher->dispatch($event, VoteEvent::NAME);
 
@@ -148,6 +169,12 @@ final class VoteManager {
       ]);
     } catch (EntityStorageException $e) {
       $transaction->rollBack();
+
+      // A constraint única (question, user_id) protege contra voto duplicado
+      // em alta concorrência, quando a checagem prévia não é suficiente.
+      if ($this->isDuplicateKeyViolation($e)) {
+        throw new VoteException('You have already voted for this question.', VoteException::DUPLICATE);
+      }
 
       $this->logger->error('Vote save failed: {message}', [
         'message' => $e->getMessage(),
@@ -184,16 +211,16 @@ final class VoteManager {
     $config = $this->configFactory->get('voting_core.settings');
     $maxVotesPerHour = (int) ($config->get('max_votes_per_hour') ?? 0);
 
-    // If no limit set, always allow
+    // If no limit set, always allow.
     if ($maxVotesPerHour <= 0) {
       return TRUE;
     }
 
-    // Count votes in last hour
+    // Count votes in last hour.
     $voteStorage = $this->entityTypeManager->getStorage('vote');
     $query = $voteStorage->getQuery()
       ->condition('user_id', $userId)
-      ->condition('created', \Drupal::time()->getRequestTime() - 3600, '>')
+      ->condition('created', $this->time->getRequestTime() - 3600, '>')
       ->accessCheck(FALSE)
       ->count();
 
@@ -208,6 +235,30 @@ final class VoteManager {
     }
 
     return TRUE;
+  }
+
+  /**
+   * Detects a database duplicate-key violation from a storage exception.
+   *
+   * @param \Drupal\Core\Entity\EntityStorageException $e
+   *   The caught exception.
+   *
+   * @return bool
+   *   TRUE when the exception chain contains a duplicate-key error.
+   */
+  private function isDuplicateKeyViolation(EntityStorageException $e): bool {
+    $previous = $e->getPrevious();
+    while ($previous instanceof \Throwable) {
+      if ($previous instanceof \PDOException) {
+        $driverCode = $previous->errorInfo[1] ?? NULL;
+        if ($previous->getCode() === '23000' || $driverCode === 1062) {
+          return TRUE;
+        }
+      }
+      $previous = $previous->getPrevious();
+    }
+
+    return FALSE;
   }
 
   /**
@@ -287,7 +338,9 @@ final class VoteManager {
     if (!$vote) {
       return NULL;
     }
+    /** @var \Drupal\voting_core\Entity\Vote $vote */
 
+    /** @var \Drupal\voting_core\Entity\Option|null $option */
     $option = $vote->get('option')->entity;
     return $option ? $option->get('identifier')->value : NULL;
   }

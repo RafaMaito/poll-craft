@@ -5,6 +5,8 @@ services:
       - "@entity_type.manager"
       - "@logger.channel.voting_core"
       - "@cache.default"
+      - "@database"
+      - "@config.factory"
 
   voting_core.vote_manager:
     class: 'Drupal\voting_core\Service\VoteManager'
@@ -15,7 +17,7 @@ services:
       - "@config.factory"
       - "@database"
       - "@event_dispatcher"
-      - "@cache.default"
+      - "@datetime.time"
 
   voting_core.external_sync_subscriber:
     class: Drupal\voting_core\EventSubscriber\ExternalSyncSubscriber
@@ -31,6 +33,7 @@ services:
     arguments:
       - "@cache.default"
       - "@logger.channel.voting_core"
+      - "@cache_tags.invalidator"
     tags:
       - { name: event_subscriber }
 

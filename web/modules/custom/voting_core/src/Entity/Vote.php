@@ -34,7 +34,7 @@ use Drupal\Core\Entity\EntityChangedTrait;
  *     }
  *   },
  *   base_table = "voting_vote",
- *   admin_permission = "administer Votes",
+ *   admin_permission = "administer_voting_votes",
  *   entity_keys = {
  *     "id" = "id",
  *     "uuid" = "uuid"
@@ -52,9 +52,8 @@ final class Vote extends ContentEntityBase {
   /**
    * Base field definitions for the Vote entity.
    *
-   * @return array<string, \Drupal\Core\Field\BaseFieldDefinition>
-   *  An array of base field definitions.
-   *  
+   * @return array<string, \Drupal\Core\Field\FieldDefinitionInterface>
+   *   An array of base field definitions.
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
     $fields = parent::baseFieldDefinitions($entity_type);
@@ -119,8 +118,11 @@ final class Vote extends ContentEntityBase {
    */
   public function label(): string {
     try {
+      /** @var \Drupal\user\UserInterface|null $user */
       $user = $this->get('user_id')->entity;
+      /** @var \Drupal\voting_core\Entity\Question|null $question */
       $question = $this->get('question')->entity;
+      /** @var \Drupal\voting_core\Entity\Option|null $option */
       $option = $this->get('option')->entity;
 
       if ($user && $question && $option) {

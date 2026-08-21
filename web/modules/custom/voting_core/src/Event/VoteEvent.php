@@ -78,7 +78,7 @@ final class VoteEvent extends Event {
 
     // Fallback to current time if "created" is NULL.
     if ($created === NULL) {
-      return \Drupal::time()->getRequestTime();
+      return time();
     }
 
     return (int) $created;
