@@ -5,27 +5,29 @@ declare(strict_types=1);
 namespace Drupal\voting_core\EventSubscriber;
 
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\voting_core\Event\VoteEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Invalidates cached voting results when a vote is cast.
+ *
  * GOAL:
  * - Ensure users see up-to-date results after voting.
  * - Maintain cache consistency with vote data.
- * 
  */
 final class VoteCacheInvalidationSubscriber implements EventSubscriberInterface {
 
   public function __construct(
     private readonly CacheBackendInterface $cacheBackend,
     private readonly LoggerChannelInterface $logger,
-  ) {}
+    private readonly CacheTagsInvalidatorInterface $cacheTagsInvalidator,
+  ) {
+  }
 
   /**
    * Gets the subscribed events.
-   * 
    */
   public static function getSubscribedEvents(): array {
     return [
@@ -47,7 +49,7 @@ final class VoteCacheInvalidationSubscriber implements EventSubscriberInterface 
     $this->cacheBackend->delete($cacheKey);
 
     // Also invalidate cache tags if used.
-    \Drupal::service('cache_tags.invalidator')->invalidateTags([
+    $this->cacheTagsInvalidator->invalidateTags([
       "question:{$question->id()}",
       'question_results',
     ]);
@@ -58,5 +60,4 @@ final class VoteCacheInvalidationSubscriber implements EventSubscriberInterface 
       'user_id' => $event->getUserId(),
     ]);
   }
-
 }
