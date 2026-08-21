@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace Drupal\voting_api\EventSubscriber;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Flood\FloodInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Adds basic security controls for Voting API:
- * - IP-based rate limiting using Redis
- * - Content-Type and JSON payload validation for POST /vote
+ * Adds basic security controls for the Voting API.
+ *
+ * - IP-based rate limiting using the Flood API (database-backed).
+ * - Content-Type and JSON payload validation for POST /vote.
  */
 final class ApiSecuritySubscriber implements EventSubscriberInterface {
 
@@ -26,7 +28,19 @@ final class ApiSecuritySubscriber implements EventSubscriberInterface {
   public function __construct(
     private readonly ConfigFactoryInterface $configFactory,
     private readonly LoggerInterface $logger,
+    private readonly FloodInterface $flood,
   ) {
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      $container->get('config.factory'),
+      $container->get('logger.channel.voting_api'),
+      $container->get('flood'),
+    );
   }
 
   /**
@@ -34,8 +48,9 @@ final class ApiSecuritySubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents(): array {
     return [
-      // Prioridade alta para rodar antes do controller.
-      KernelEvents::REQUEST => ['onRequest', 100],
+      // Runs after routing (RouterListener has priority 32) so that the route
+      // name is available, but before the controller executes.
+      KernelEvents::REQUEST => ['onRequest', 28],
     ];
   }
 
@@ -51,7 +66,7 @@ final class ApiSecuritySubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // 1) Rate limiting (Redis).
+    // 1) Rate limiting (Flood API).
     if (!$this->checkRateLimit($request, $event)) {
       // checkRateLimit já setou a response 429.
       return;
@@ -59,40 +74,28 @@ final class ApiSecuritySubscriber implements EventSubscriberInterface {
 
     // 2) Validação extra para POST /api/voting/vote.
     if ($routeName === 'voting_api.vote' && $request->getMethod() === 'POST') {
-      $this->validateVoteRequest($request);
+      if (!$this->validateVoteRequest($request, $event)) {
+        return;
+      }
     }
   }
 
   /**
-   * Rate limiting via Redis.
+   * Rate limiting via Flood API (identificador baseado no IP).
    *
    * @return bool
    *   TRUE se estiver dentro do limite, FALSE se já respondeu 429.
    */
   private function checkRateLimit(Request $request, RequestEvent $event): bool {
-    $ip = $request->getClientIp() ?? 'unknown';
-
-    // Permite configurar via voting_core.settings se quiser.
     $config = $this->configFactory->get('voting_core.settings');
     $limit = (int) ($config->get('api_rate_limit_per_ip') ?? 100);
     $window = (int) ($config->get('api_rate_limit_window') ?? 60);
 
-    $key = sprintf('voting_api:rate_limit:%s', $ip);
+    // Identificador baseado no IP (não registra o IP nos logs — evita PII).
+    $identifier = sprintf('voting_api:%s', $request->getClientIp() ?? 'unknown');
 
-    /** @var \Redis $redis */
-    $redis = \Drupal::service('redis.factory')->get();
-
-    $count = $redis->incr($key);
-
-    if ($count === 1) {
-      // Expirar contador após $window segundos.
-      $redis->expire($key, $window);
-    }
-
-    if ($count > $limit) {
+    if (!$this->flood->isAllowed('voting_api', $limit, $window, $identifier)) {
       $this->logger->warning('Voting API rate limit exceeded.', [
-        'ip' => $ip,
-        'count' => $count,
         'limit' => $limit,
         'window' => $window,
       ]);
@@ -102,7 +105,6 @@ final class ApiSecuritySubscriber implements EventSubscriberInterface {
         429
       );
 
-      // Cabeçalhos opcionais de rate limit.
       $response->headers->set('X-RateLimit-Limit', (string) $limit);
       $response->headers->set('X-RateLimit-Remaining', '0');
       $response->headers->set('X-RateLimit-Reset', (string) (time() + $window));
@@ -111,32 +113,47 @@ final class ApiSecuritySubscriber implements EventSubscriberInterface {
       return FALSE;
     }
 
-    // Se quiser, pode expor cabeçalhos *depois* em outro subscriber de RESPONSE.
+    // Registra a tentativa para contabilizar no Flood API.
+    $this->flood->register('voting_api', $window, $identifier);
+
     return TRUE;
   }
 
   /**
    * Validates Content-Type and JSON payload for vote endpoint.
    */
-  private function validateVoteRequest(Request $request): void {
+  private function validateVoteRequest(Request $request, RequestEvent $event): bool {
     $contentType = (string) $request->headers->get('Content-Type', '');
     if (!str_starts_with($contentType, 'application/json')) {
-      throw new BadRequestHttpException('Content-Type must be application/json.');
+      $this->setErrorResponse($event, 'Content-Type must be application/json.', 400);
+      return FALSE;
     }
 
     $content = $request->getContent();
     if (strlen($content) > 1024 * 1024) {
-      throw new BadRequestHttpException('Payload too large. Max 1MB.');
+      $this->setErrorResponse($event, 'Payload too large. Max 1MB.', 400);
+      return FALSE;
     }
 
     $decoded = json_decode($content, TRUE);
 
     if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-      throw new BadRequestHttpException('Invalid JSON payload.');
+      $this->setErrorResponse($event, 'Invalid JSON payload.', 400);
+      return FALSE;
     }
 
     if (!isset($decoded['question_identifier'], $decoded['option_identifier'])) {
-      throw new BadRequestHttpException('Missing required fields: question_identifier, option_identifier.');
+      $this->setErrorResponse($event, 'Missing required fields: question_identifier, option_identifier.', 400);
+      return FALSE;
     }
+
+    return TRUE;
+  }
+
+  /**
+   * Sets a JSON error response and stops the request.
+   */
+  private function setErrorResponse(RequestEvent $event, string $message, int $status): void {
+    $event->setResponse(new JsonResponse(['error' => $message], $status));
   }
 }

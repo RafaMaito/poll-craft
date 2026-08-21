@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
  * 3. Type hints everywhere for PHP 8+ strict typing
  * 4. Consistent JSON response format
  * 5. Proper HTTP status codes (200, 404, etc.)
- *
  */
 final class QuestionApiController extends ControllerBase {
 
@@ -73,7 +72,8 @@ final class QuestionApiController extends ControllerBase {
       return new JsonResponse([
         'questions' => $questions,
       ], Response::HTTP_OK);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       // Log the error for debugging.
       $this->getLogger('voting_api')->error('Error listing questions: @message', [
         '@message' => $e->getMessage(),
@@ -91,7 +91,7 @@ final class QuestionApiController extends ControllerBase {
    * Retrieves a specific voting question by identifier.
    *
    * Endpoint: GET /api/voting/questions/{identifier}
-   * Example: GET /api/voting/questions/favorite-color
+   * Example: GET /api/voting/questions/favorite-color.
    *
    * Response format (success):
    * {
@@ -141,7 +141,8 @@ final class QuestionApiController extends ControllerBase {
       return new JsonResponse([
         'question' => $question,
       ], Response::HTTP_OK);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       $this->getLogger('voting_api')->error('Error retrieving question: @message', [
         '@message' => $e->getMessage(),
         'identifier' => $identifier,
@@ -153,4 +154,5 @@ final class QuestionApiController extends ControllerBase {
       ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
   }
+
 }

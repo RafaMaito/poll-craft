@@ -42,7 +42,7 @@ final class ResultsApiController extends ControllerBase {
    * Retrieves voting results for a specific question.
    *
    * Endpoint: GET /api/voting/questions/{identifier}/results.
-   * Example: GET /api/voting/questions/favorite-color/results
+   * Example: GET /api/voting/questions/favorite-color/results.
    *
    * Response format (success):
    * {

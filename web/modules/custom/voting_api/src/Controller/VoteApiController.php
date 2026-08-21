@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\voting_api\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\voting_core\Exception\VoteException;
 use Drupal\voting_core\Service\VoteManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,7 +36,8 @@ final class VoteApiController extends ControllerBase {
    */
   public function __construct(
     private readonly VoteManager $voteManager,
-  ) {}
+  ) {
+  }
 
   /**
    * {@inheritdoc}
@@ -146,26 +148,36 @@ final class VoteApiController extends ControllerBase {
         'option_identifier' => $optionIdentifier,
       ], Response::HTTP_OK);
     }
-    catch (\RuntimeException $e) {
-      // Business rule violations from VoteManager.
-      // Map error messages to appropriate HTTP status codes.
-      $errorMessage = $e->getMessage();
-
-      // Determine the appropriate HTTP status code,
-      // based on error message.
-      $statusCode = match (TRUE) {
-        str_contains($errorMessage, 'disabled') => Response::HTTP_FORBIDDEN,
-        str_contains($errorMessage, 'not allowed') => Response::HTTP_FORBIDDEN,
-        str_contains($errorMessage, 'already voted') => Response::HTTP_CONFLICT,
-        str_contains($errorMessage, 'not found') => Response::HTTP_NOT_FOUND,
-        str_contains($errorMessage, 'inactive') => Response::HTTP_NOT_FOUND,
-        str_contains($errorMessage, 'Invalid option') => Response::HTTP_NOT_FOUND,
-        default => Response::HTTP_INTERNAL_SERVER_ERROR,
+    catch (VoteException $e) {
+      // Business rule violations from VoteManager, mapped by error code.
+      $statusCode = match ($e->getErrorCode()) {
+        VoteException::DISABLED,
+        VoteException::ANONYMOUS_NOT_ALLOWED,
+        VoteException::VOTING_CLOSED => Response::HTTP_FORBIDDEN,
+        VoteException::RATE_LIMIT => Response::HTTP_TOO_MANY_REQUESTS,
+        VoteException::QUESTION_NOT_FOUND,
+        VoteException::QUESTION_INACTIVE,
+        VoteException::INVALID_OPTION => Response::HTTP_NOT_FOUND,
+        VoteException::DUPLICATE => Response::HTTP_CONFLICT,
+        default => Response::HTTP_BAD_REQUEST,
       };
 
       return new JsonResponse([
-        'error' => $errorMessage,
+        'error' => $e->getMessage(),
       ], $statusCode);
+    }
+    catch (\RuntimeException $e) {
+      // Generic runtime errors (storage/system failures) → 500.
+      $this->getLogger('voting_api')->error('Vote failed: @message', [
+        '@message' => $e->getMessage(),
+        'question_identifier' => $questionIdentifier,
+        'option_identifier' => $optionIdentifier,
+        'exception' => $e,
+      ]);
+
+      return new JsonResponse([
+        'error' => 'An unexpected error occurred. Please try again.',
+      ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
     catch (\Exception $e) {
       // Unexpected system errors.

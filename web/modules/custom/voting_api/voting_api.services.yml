@@ -4,6 +4,7 @@ services:
     arguments:
       - "@config.factory"
       - "@logger.channel.voting_api"
+      - "@flood"
     tags:
       - { name: event_subscriber }
 
