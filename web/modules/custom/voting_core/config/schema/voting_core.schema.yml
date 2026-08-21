@@ -1,90 +1,47 @@
-#  YAML schema for Voting Core module entities.
-voting_vote:
-  type: mapping
-  label: 'Voting Vote'
+# Config schema for Voting Core.
+voting_core.settings:
+  type: config_object
+  label: 'Voting Core settings'
   mapping:
-    id:
+    voting_enabled:
+      type: boolean
+      label: 'Enable voting system'
+    show_results_by_default:
+      type: boolean
+      label: 'Show results by default'
+    allow_anonymous_voting:
+      type: boolean
+      label: 'Allow anonymous voting'
+    max_votes_per_question:
       type: integer
-      label: 'ID'
-    uuid:
+      label: 'Max votes per question'
+    max_votes_per_hour:
+      type: integer
+      label: 'Max votes per user per hour'
+    cache_results_ttl:
+      type: integer
+      label: 'Results cache TTL (seconds)'
+    global_voting_enabled:
+      type: boolean
+      label: 'Global voting enabled (legacy)'
+    default_show_results:
+      type: boolean
+      label: 'Default show results (legacy)'
+    api_rate_limit_per_ip:
+      type: integer
+      label: 'API rate limit per IP'
+    api_rate_limit_window:
+      type: integer
+      label: 'API rate limit window (seconds)'
+    external_sync_enabled:
+      type: boolean
+      label: 'External sync enabled'
+    external_api_url:
       type: string
-      label: 'UUID'
-    question:
-      type: integer
-      label: 'Question'
-    option:
-      type: integer
-      label: 'Option'
-    user_id:
-      type: integer
-      label: 'User ID'
-    created:
-      type: integer
-      label: 'Created'
-# YAML schema for Voting Core module entities.
-voting_question:
-  type: mapping
-  label: 'Voting Question'
-  mapping:
-    id:
-      type: integer
-      label: 'ID'
-    uuid:
+      label: 'External API URL'
+    external_api_key:
       type: string
-      label: 'UUID'
-    identifier:
+      label: 'External API key'
+    external_sync_queue_name:
       type: string
-      label: 'Identifier'
-    title:
-      type: string
-      label: 'Title'
-    description:
-      type: string
-      label: 'Description'
-    show_results:
-      type: integer
-      label: 'Show results'
-    status:
-      type: integer
-      label: 'Status'
-    created:
-      type: integer
-      label: 'Created'
-    changed:
-      type: integer
-      label: 'Changed'
-    voting_end_date:
-      type: string
-      label: 'Voting end date'
-# YAML schema for Voting Core module entities.
-voting_option:
-  type: mapping
-  label: 'Voting Option'
-  mapping:
-    id:
-      type: integer
-      label: 'ID'
-    uuid:
-      type: string
-      label: 'UUID'
-    question:
-      type: integer
-      label: 'Question'
-    identifier:
-      type: string
-      label: 'Identifier'
-    title:
-      type: string
-      label: 'Title'
-    description:
-      type: string
-      label: 'Description'
-    weight:
-      type: integer
-      label: 'Weight'
-    created:
-      type: integer
-      label: 'Created'
-    changed:
-      type: integer
-      label: 'Changed'
+      label: 'External sync queue name'

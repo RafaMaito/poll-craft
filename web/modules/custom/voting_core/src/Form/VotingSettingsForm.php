@@ -17,15 +17,16 @@ use Drupal\Core\Form\FormStateInterface;
 class VotingSettingsForm extends ConfigFormBase {
 
   /**
-   * Gets the names of the editable configuration objects.
-   * {@inheritdoc}
+   * Gets the editable config names.
+   *
+   * @return string[]
+   *   The editable config names.
    */
   protected function getEditableConfigNames(): array {
     return ['voting_core.settings'];
   }
 
   /**
-   * Gets the form ID.
    * {@inheritdoc}
    */
   public function getFormId(): string {
@@ -34,7 +35,14 @@ class VotingSettingsForm extends ConfigFormBase {
 
   /**
    * Builds the voting settings form.
-   * {@inheritdoc}
+   *
+   * @param array<string, mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array<string, mixed>
+   *   The form array.
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->config('voting_core.settings');
@@ -88,12 +96,65 @@ class VotingSettingsForm extends ConfigFormBase {
       '#max' => 3600,
     ];
 
+    $form['performance']['max_votes_per_hour'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Max votes per user per hour'),
+      '#description' => $this->t('Limits how many votes a user can cast per hour. Set to 0 to disable this limit.'),
+      '#default_value' => $config->get('max_votes_per_hour') ?? 0,
+      '#min' => 0,
+    ];
+
+    $form['api'] = [
+      '#type' => 'details',
+      '#title' => $this->t('API & External Sync'),
+      '#open' => FALSE,
+    ];
+
+    $form['api']['api_rate_limit_per_ip'] = [
+      '#type' => 'number',
+      '#title' => $this->t('API rate limit per IP'),
+      '#description' => $this->t('Maximum number of API requests allowed per IP within the rate limit window.'),
+      '#default_value' => $config->get('api_rate_limit_per_ip') ?? 100,
+      '#min' => 1,
+    ];
+
+    $form['api']['api_rate_limit_window'] = [
+      '#type' => 'number',
+      '#title' => $this->t('API rate limit window (seconds)'),
+      '#description' => $this->t('Time window, in seconds, for the API rate limit.'),
+      '#default_value' => $config->get('api_rate_limit_window') ?? 60,
+      '#min' => 1,
+    ];
+
+    $form['api']['external_sync_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable external sync'),
+      '#description' => $this->t('When enabled, each vote is queued for synchronization with an external API.'),
+      '#default_value' => $config->get('external_sync_enabled') ?? FALSE,
+    ];
+
+    $form['api']['external_api_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('External API URL'),
+      '#default_value' => $config->get('external_api_url') ?? '',
+    ];
+
+    $form['api']['external_api_key'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('External API key'),
+      '#default_value' => $config->get('external_api_key') ?? '',
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
   /**
    * Handles form submission.
-   * {@inheritdoc}
+   *
+   * @param array<string, mixed> $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('voting_core.settings')
@@ -101,9 +162,14 @@ class VotingSettingsForm extends ConfigFormBase {
       ->set('allow_anonymous_voting', $form_state->getValue('allow_anonymous_voting'))
       ->set('show_results_by_default', $form_state->getValue('show_results_by_default'))
       ->set('cache_results_ttl', $form_state->getValue('cache_results_ttl'))
+      ->set('max_votes_per_hour', $form_state->getValue('max_votes_per_hour'))
+      ->set('api_rate_limit_per_ip', $form_state->getValue('api_rate_limit_per_ip'))
+      ->set('api_rate_limit_window', $form_state->getValue('api_rate_limit_window'))
+      ->set('external_sync_enabled', $form_state->getValue('external_sync_enabled'))
+      ->set('external_api_url', $form_state->getValue('external_api_url'))
+      ->set('external_api_key', $form_state->getValue('external_api_key'))
       ->save();
 
     parent::submitForm($form, $form_state);
   }
-
 }

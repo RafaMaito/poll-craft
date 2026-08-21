@@ -6,6 +6,12 @@ show_results_by_default: TRUE
 allow_anonymous_voting: FALSE
 max_votes_per_question: 1
 
+# Per-user rate limiting (0 = disabled/unlimited).
+max_votes_per_hour: 0
+
+# Results cache TTL in seconds (0 = no cache).
+cache_results_ttl: 300
+
 # Legacy/duplicated flags kept for backward compatibility.
 global_voting_enabled: TRUE
 default_show_results: TRUE
